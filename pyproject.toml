@@ -9,7 +9,7 @@ packages = [{ include = "ductile", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-discord-py = "^2.3.2"
+discord-py = "^2.3"
 
 
 [build-system]
