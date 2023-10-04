@@ -1,0 +1,13 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "python.analysis.typeCheckingMode": "basic",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.languageServer": "Pylance",
+  "python.linting.enabled": true,
+  "python.linting.lintOnSave": true,
+}
