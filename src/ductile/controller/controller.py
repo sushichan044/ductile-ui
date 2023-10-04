@@ -3,8 +3,8 @@ from typing import TYPE_CHECKING, Any, Literal, NamedTuple, overload
 
 import discord
 
-from src.ductile import State, View
-from src.ductile.internal import _InternalView
+from ductile import State, View
+from ductile.internal import _InternalView
 
 from .type import ViewObjectDictWithAttachment, ViewObjectDictWithFiles
 

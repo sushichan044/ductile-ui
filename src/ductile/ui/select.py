@@ -5,14 +5,14 @@ from discord import SelectOption as _SelectOption
 from discord.enums import ChannelType
 from pydantic import BaseModel, ConfigDict, Field
 
-from src.ductile.types import (
+from ductile.types import (
     ChannelSelectCallback,
     MentionableSelectCallback,
     RoleSelectCallback,
     SelectCallback,
     UserSelectCallback,
 )
-from src.ductile.utils import call_any_function
+from ductile.utils import call_any_function
 
 
 class SelectStyle(TypedDict, total=False):
