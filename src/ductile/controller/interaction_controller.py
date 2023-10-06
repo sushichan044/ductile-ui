@@ -1,14 +1,17 @@
+from typing import TYPE_CHECKING
+
 import discord
 
-from ductile import View
-
 from .controller import ViewController
+
+if TYPE_CHECKING:
+    from ductile import View
 
 
 class InteractionController(ViewController):
     def __init__(
         self,
-        view: View,
+        view: "View",
         *,
         interaction: discord.Interaction,
         timeout: float | None = 180,

@@ -1,11 +1,13 @@
-from typing import Literal, TypedDict
+from typing import TYPE_CHECKING, Literal, TypedDict
 
 import discord
 from discord import Emoji, PartialEmoji, ui
 from discord.interactions import Interaction
 
-from ductile.types import InteractionCallback
 from ductile.utils import call_any_function
+
+if TYPE_CHECKING:
+    from ductile.types import InteractionCallback
 
 
 class _ButtonStyleRequired(TypedDict):
@@ -26,7 +28,7 @@ class Button(ui.Button):
         *,
         style: ButtonStyle,
         custom_id: str | None = None,
-        on_click: InteractionCallback | None = None,
+        on_click: "InteractionCallback" | None = None,
     ) -> None:
         __style = discord.ButtonStyle[style.get("color", "grey")]
         __disabled = style.get("disabled", False)

@@ -3,13 +3,13 @@ from typing import TYPE_CHECKING, Any, Literal, NamedTuple, overload
 
 import discord
 
-from ductile import State, View
+from ductile import State
 from ductile.internal import _InternalView
 
 from .type import ViewObjectDictWithAttachment, ViewObjectDictWithFiles
 
 if TYPE_CHECKING:
-    from ductile import ViewObject
+    from ductile import View, ViewObject
 
 
 class ViewResult(NamedTuple):
@@ -18,7 +18,7 @@ class ViewResult(NamedTuple):
 
 
 class ViewController:
-    def __init__(self, view: View, *, timeout: float | None = 180) -> None:
+    def __init__(self, view: "View", *, timeout: float | None = 180) -> None:
         self.__view = view
         view._controller = self  # noqa: SLF001
         self.__raw_view = _InternalView(timeout=timeout, on_error=self.__view.on_error, on_timeout=self.__view.on_timeout)
@@ -117,7 +117,7 @@ class ViewController:
             This can be passed to `discord.abc.Messageable.send` or `discord.abc.Messageable.edit` and etc
             as unpacked keyword arguments.
         """
-        view_object: ViewObject = self.__view.render()
+        view_object: "ViewObject" = self.__view.render()
 
         if mode == "attachment":
             d_attachment: ViewObjectDictWithAttachment = {}
