@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ductile-ui"
-version = "0.1.0"
+version = "0.1.2"
 description = "A library provides interactive ui for discord.py"
 authors = ["sushi-chaaaan <mail@sushichan.live>"]
 license = "MIT"
