@@ -5,10 +5,10 @@ from discord import SelectOption as _SelectOption
 from discord.enums import ChannelType
 from pydantic import BaseModel, ConfigDict, Field
 
-from ductile.utils import call_any_function
+from ..utils import call_any_function  # noqa: TID252
 
 if TYPE_CHECKING:
-    from ductile.types import (
+    from ..types import (  # noqa: TID252
         ChannelSelectCallback,
         MentionableSelectCallback,
         RoleSelectCallback,

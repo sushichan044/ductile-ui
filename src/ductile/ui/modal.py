@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Literal, TypedDict
 from discord import Interaction, TextStyle, ui
 
 if TYPE_CHECKING:
-    from ductile.types import ModalCallback
+    from ..types import ModalCallback  # noqa: TID252
 
 
 class TextInputStyle(TypedDict, total=False):

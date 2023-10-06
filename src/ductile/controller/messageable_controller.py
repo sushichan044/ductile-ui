@@ -5,7 +5,7 @@ import discord
 from .controller import ViewController
 
 if TYPE_CHECKING:
-    from ductile import View
+    from ..view import View  # noqa: TID252
 
 
 class MessageableController(ViewController):
