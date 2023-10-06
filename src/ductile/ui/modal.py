@@ -1,8 +1,9 @@
-from typing import Literal, TypedDict
+from typing import TYPE_CHECKING, Literal, TypedDict
 
 from discord import Interaction, TextStyle, ui
 
-from ductile.types import ModalCallback
+if TYPE_CHECKING:
+    from ductile.types import ModalCallback
 
 
 class TextInputStyle(TypedDict, total=False):
@@ -51,7 +52,7 @@ class Modal(ui.Modal):
         inputs: list[TextInput],
         timeout: float | None = None,
         custom_id: str | None = None,
-        on_submit: ModalCallback | None = None,
+        on_submit: "ModalCallback" | None = None,
     ) -> None:
         __d = {
             "title": title,

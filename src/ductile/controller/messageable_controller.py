@@ -1,12 +1,15 @@
-import discord
+from typing import TYPE_CHECKING
 
-from ductile import View
+import discord
 
 from .controller import ViewController
 
+if TYPE_CHECKING:
+    from ductile import View
+
 
 class MessageableController(ViewController):
-    def __init__(self, view: View, *, messageable: discord.abc.Messageable, timeout: float | None = 180) -> None:
+    def __init__(self, view: "View", *, messageable: discord.abc.Messageable, timeout: float | None = 180) -> None:
         super().__init__(view, timeout=timeout)
         self.__messageable = messageable
 

@@ -1,9 +1,11 @@
 import asyncio
 from collections.abc import Callable
-from typing import Any, Generic, NamedTuple, TypeVar
+from typing import TYPE_CHECKING, Any, Generic, NamedTuple, TypeVar
 
 from .utils import get_logger
-from .view import View
+
+if TYPE_CHECKING:
+    from .view import View
 
 T = TypeVar("T", bound=Any)
 
@@ -27,7 +29,7 @@ class State(Generic[T]):
         Sets the current value of the state to the new value.
     """
 
-    def __init__(self, initial_value: T, view: View, /, *, loop: asyncio.AbstractEventLoop | None = None) -> None:
+    def __init__(self, initial_value: T, view: "View", /, *, loop: asyncio.AbstractEventLoop | None = None) -> None:
         self._initial_value: T = initial_value
         self._current_value: T = self._initial_value
 
@@ -101,7 +103,7 @@ class UseStateTuple(NamedTuple, Generic[T]):
 
 def use_state(
     initial_value: T,
-    view: View,
+    view: "View",
     /,
     *,
     loop: asyncio.AbstractEventLoop | None = None,
