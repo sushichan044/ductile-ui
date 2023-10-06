@@ -17,8 +17,8 @@ class _InternalView(ui.View):
         self,
         *,
         timeout: float | None = 180,
-        on_error: "ViewErrorHandler" | None = None,
-        on_timeout: "ViewTimeoutHandler" | None = None,
+        on_error: "ViewErrorHandler | None" = None,
+        on_timeout: "ViewTimeoutHandler | None" = None,
     ) -> None:
         super().__init__(timeout=timeout)
         self.__on_error = on_error
