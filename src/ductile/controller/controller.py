@@ -3,13 +3,12 @@ from typing import TYPE_CHECKING, Any, Literal, NamedTuple, overload
 
 import discord
 
-from ductile import State
-from ductile.internal import _InternalView
-
-from .type import ViewObjectDictWithAttachment, ViewObjectDictWithFiles
+from ..internal import _InternalView  # noqa: TID252
+from ..state import State  # noqa: TID252
 
 if TYPE_CHECKING:
-    from ductile import View, ViewObject
+    from ..view import View, ViewObject  # noqa: TID252
+    from .type import ViewObjectDictWithAttachment, ViewObjectDictWithFiles
 
 
 class ViewResult(NamedTuple):
@@ -87,17 +86,17 @@ class ViewController:
                 yield k, v
 
     @overload
-    def _process_view_for_discord(self, mode: Literal["attachment"]) -> ViewObjectDictWithAttachment:
+    def _process_view_for_discord(self, mode: Literal["attachment"]) -> "ViewObjectDictWithAttachment":
         ...
 
     @overload
-    def _process_view_for_discord(self, mode: Literal["files"]) -> ViewObjectDictWithFiles:
+    def _process_view_for_discord(self, mode: Literal["files"]) -> "ViewObjectDictWithFiles":
         ...
 
     def _process_view_for_discord(
         self,
         mode: Literal["attachment", "files"],
-    ) -> ViewObjectDictWithAttachment | ViewObjectDictWithFiles:
+    ) -> "ViewObjectDictWithAttachment | ViewObjectDictWithFiles":
         """
         _process_view_for_discord is a helper function to process the view for Discord.
 

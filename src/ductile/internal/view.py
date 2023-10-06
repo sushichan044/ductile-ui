@@ -1,8 +1,11 @@
+from typing import TYPE_CHECKING
+
 from discord import ui
 from discord.interactions import Interaction
 from discord.ui.item import Item
 
-from ductile.types import ViewErrorHandler, ViewTimeoutHandler
+if TYPE_CHECKING:
+    from ..types import ViewErrorHandler, ViewTimeoutHandler  # noqa: TID252
 
 __all__ = [
     "_InternalView",
@@ -14,8 +17,8 @@ class _InternalView(ui.View):
         self,
         *,
         timeout: float | None = 180,
-        on_error: ViewErrorHandler | None = None,
-        on_timeout: ViewTimeoutHandler | None = None,
+        on_error: "ViewErrorHandler" | None = None,
+        on_timeout: "ViewTimeoutHandler" | None = None,
     ) -> None:
         super().__init__(timeout=timeout)
         self.__on_error = on_error

@@ -4,10 +4,10 @@ import discord
 from discord import Emoji, PartialEmoji, ui
 from discord.interactions import Interaction
 
-from ductile.utils import call_any_function
+from ..utils import call_any_function  # noqa: TID252
 
 if TYPE_CHECKING:
-    from ductile.types import InteractionCallback
+    from ..types import InteractionCallback  # noqa: TID252
 
 
 class _ButtonStyleRequired(TypedDict):
