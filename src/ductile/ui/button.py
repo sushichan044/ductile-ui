@@ -28,7 +28,7 @@ class Button(ui.Button):
         *,
         style: ButtonStyle,
         custom_id: str | None = None,
-        on_click: "InteractionCallback" | None = None,
+        on_click: "InteractionCallback | None" = None,
     ) -> None:
         __style = discord.ButtonStyle[style.get("color", "grey")]
         __disabled = style.get("disabled", False)

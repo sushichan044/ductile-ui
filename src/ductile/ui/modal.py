@@ -52,7 +52,7 @@ class Modal(ui.Modal):
         inputs: list[TextInput],
         timeout: float | None = None,
         custom_id: str | None = None,
-        on_submit: "ModalCallback" | None = None,
+        on_submit: "ModalCallback | None" = None,
     ) -> None:
         __d = {
             "title": title,

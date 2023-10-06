@@ -66,7 +66,7 @@ class Select(ui.Select):
         style: SelectStyle,
         options: list[SelectOption],
         custom_id: str | None = None,
-        on_select: "SelectCallback" | None = None,
+        on_select: "SelectCallback | None" = None,
     ) -> None:
         __disabled = style.get("disabled", False)
         __placeholder = style.get("placeholder", None)
@@ -105,7 +105,7 @@ class ChannelSelect(ui.ChannelSelect):
         config: ChannelSelectConfig,
         style: SelectStyle,
         custom_id: str | None = None,
-        on_select: "ChannelSelectCallback" | None = None,
+        on_select: "ChannelSelectCallback | None" = None,
     ) -> None:
         __disabled = style.get("disabled", False)
         __placeholder = style.get("placeholder", None)
@@ -135,7 +135,7 @@ class RoleSelect(ui.RoleSelect):
         config: RoleSelectConfig,
         style: SelectStyle,
         custom_id: str | None = None,
-        on_select: "RoleSelectCallback" | None = None,
+        on_select: "RoleSelectCallback | None" = None,
     ) -> None:
         __disabled = style.get("disabled", False)
         __placeholder = style.get("placeholder", None)
@@ -164,7 +164,7 @@ class MentionableSelect(ui.MentionableSelect):
         config: MentionableSelectConfig,
         style: SelectStyle,
         custom_id: str | None = None,
-        on_select: "MentionableSelectCallback" | None = None,
+        on_select: "MentionableSelectCallback | None" = None,
     ) -> None:
         __disabled = style.get("disabled", False)
         __placeholder = style.get("placeholder", None)
@@ -193,7 +193,7 @@ class UserSelect(ui.UserSelect):
         config: UserSelectConfig,
         style: SelectStyle,
         custom_id: str | None = None,
-        on_select: "UserSelectCallback" | None = None,
+        on_select: "UserSelectCallback | None" = None,
     ) -> None:
         __disabled = style.get("disabled", False)
         __placeholder = style.get("placeholder", None)
