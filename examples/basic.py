@@ -13,6 +13,10 @@ class Bot(commands.Bot):
     def __init__(self) -> None:
         super().__init__(command_prefix="!", intents=discord.Intents.all())
 
+    async def on_ready(self) -> None:
+        print(f"Logged in as {self.user}")  # noqa: T201
+        print("Ready!")  # noqa: T201
+
 
 class Counter(View):
     def __init__(self) -> None:
