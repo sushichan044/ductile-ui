@@ -45,7 +45,9 @@ select = ["ALL"]
     "INP001", # add __init__.py to tests directory is too much work
     "S101",   # allow to use assert in tests
 ]
-
+"/**/examples/**" = [
+    "INP001", # add __init__.py to examples directory is too much work
+]
 
 [build-system]
 requires = ["poetry-core"]
