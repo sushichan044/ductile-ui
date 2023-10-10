@@ -1,6 +1,8 @@
 from asyncio import iscoroutinefunction
-from collections.abc import Callable
-from typing import ParamSpec, TypeVar
+from typing import TYPE_CHECKING, ParamSpec, TypeVar
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -10,7 +12,7 @@ __all__ = [
 ]
 
 
-async def call_any_function(fn: Callable[P, R], *args: P.args, **kwargs: P.kwargs) -> R:
+async def call_any_function(fn: "Callable[P, R]", *args: P.args, **kwargs: P.kwargs) -> R:
     if iscoroutinefunction(fn):
         return await fn(*args, **kwargs)
     return fn(*args, **kwargs)

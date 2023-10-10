@@ -1,6 +1,7 @@
-from typing import TypedDict
+from typing import TYPE_CHECKING, TypedDict
 
-import discord
+if TYPE_CHECKING:
+    from discord import Embed, File, ui
 
 
 class _ViewObjectDict(TypedDict, total=False):
@@ -22,13 +23,13 @@ class _ViewObjectDict(TypedDict, total=False):
     """
 
     content: str
-    embeds: list[discord.Embed]
-    view: discord.ui.View
+    embeds: "list[Embed]"
+    view: "ui.View"
 
 
 class ViewObjectDictWithAttachment(_ViewObjectDict, total=False):
-    attachments: list[discord.File]
+    attachments: "list[File]"
 
 
 class ViewObjectDictWithFiles(_ViewObjectDict, total=False):
-    files: list[discord.File]
+    files: "list[File]"

@@ -1,13 +1,14 @@
 from typing import TYPE_CHECKING, Literal, TypedDict
 
-from discord import Emoji, Interaction, PartialEmoji, ui
 from discord import SelectOption as _SelectOption
-from discord.enums import ChannelType
-from pydantic import BaseModel, ConfigDict, Field
+from discord import ui
+from pydantic import BaseModel, Field
 
 from ..utils import call_any_function  # noqa: TID252
 
 if TYPE_CHECKING:
+    from discord import ChannelType, Emoji, Interaction, PartialEmoji
+
     from ..types import (  # noqa: TID252
         ChannelSelectCallback,
         MentionableSelectCallback,
@@ -27,10 +28,10 @@ class SelectOption(BaseModel):
     label: str = Field(min_length=1, max_length=100)
     value: str | None = Field(default=None, min_length=1, max_length=100)
     description: str | None = Field(default=None, min_length=1, max_length=100)
-    emoji: str | Emoji | PartialEmoji | None = Field(default=None)
+    emoji: "str | Emoji | PartialEmoji | None" = Field(default=None)
     selected_by_default: bool = Field(default=False)
 
-    model_config = ConfigDict(arbitrary_types_allowed=True)
+    model_config = {"arbitrary_types_allowed": True}
 
 
 class SelectConfigBase(TypedDict, total=False):
@@ -43,7 +44,7 @@ class SelectConfig(SelectConfigBase):
 
 
 class ChannelSelectConfig(SelectConfigBase):
-    channel_types: list[ChannelType]
+    channel_types: "list[ChannelType]"
 
 
 class RoleSelectConfig(SelectConfigBase):
@@ -93,7 +94,7 @@ class Select(ui.Select):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: Interaction) -> None:
+    async def callback(self, interaction: "Interaction") -> None:
         if self.__callback_fn:
             await call_any_function(self.__callback_fn, interaction, self.values)
 
@@ -123,7 +124,7 @@ class ChannelSelect(ui.ChannelSelect):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: Interaction) -> None:
+    async def callback(self, interaction: "Interaction") -> None:
         if self.__callback_fn:
             await call_any_function(self.__callback_fn, interaction, self.values)
 
@@ -152,7 +153,7 @@ class RoleSelect(ui.RoleSelect):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: Interaction) -> None:
+    async def callback(self, interaction: "Interaction") -> None:
         if self.__callback_fn:
             await call_any_function(self.__callback_fn, interaction, self.values)
 
@@ -181,7 +182,7 @@ class MentionableSelect(ui.MentionableSelect):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: Interaction) -> None:
+    async def callback(self, interaction: "Interaction") -> None:
         if self.__callback_fn:
             await call_any_function(self.__callback_fn, interaction, self.values)
 
@@ -210,6 +211,6 @@ class UserSelect(ui.UserSelect):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: Interaction) -> None:
+    async def callback(self, interaction: "Interaction") -> None:
         if self.__callback_fn:
             await call_any_function(self.__callback_fn, interaction, self.values)
