@@ -9,6 +9,7 @@ repos:
       - id: end-of-file-fixer
       - id: pretty-format-json
         args: [--autofix, --indent, "2", "--no-sort-keys"]
+        exclude: devcontainer.json
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.

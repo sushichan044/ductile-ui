@@ -1,12 +1,13 @@
-from collections.abc import Generator
 from typing import TYPE_CHECKING, Any, Literal, NamedTuple, overload
-
-import discord
 
 from ..internal import _InternalView  # noqa: TID252
 from ..state import State  # noqa: TID252
 
 if TYPE_CHECKING:
+    from collections.abc import Generator
+
+    from discord import Message
+
     from ..view import View, ViewObject  # noqa: TID252
     from .type import ViewObjectDictWithAttachment, ViewObjectDictWithFiles
 
@@ -32,10 +33,10 @@ class ViewController:
         self.__view = view
         view._controller = self  # noqa: SLF001
         self.__raw_view = _InternalView(timeout=timeout, on_error=self.__view.on_error, on_timeout=self.__view.on_timeout)
-        self.__message: discord.Message | None = None
+        self.__message: "Message | None" = None
 
     @property
-    def message(self) -> discord.Message | None:
+    def message(self) -> "Message | None":
         """
         return attached message with the View.
 
@@ -47,7 +48,7 @@ class ViewController:
         return self.__message
 
     @message.setter
-    def message(self, value: discord.Message | None) -> None:
+    def message(self, value: "Message | None") -> None:
         self.__message = value
 
     async def send(self) -> None:
@@ -95,7 +96,7 @@ class ViewController:
             d[key] = state.get_state()
         return ViewResult(timed_out, d)
 
-    def _get_all_state_in_view(self) -> Generator[tuple[str, State[Any]], None, None]:
+    def _get_all_state_in_view(self) -> "Generator[tuple[str, State[Any]], None, None]":
         for k, v in self.__view.__dict__.items():
             if isinstance(v, State):
                 yield k, v
@@ -134,7 +135,7 @@ class ViewController:
         view_object: "ViewObject" = self.__view.render()
 
         if mode == "attachment":
-            d_attachment: ViewObjectDictWithAttachment = {}
+            d_attachment: "ViewObjectDictWithAttachment" = {}
             d_attachment["content"] = view_object.content
             if view_object.embeds:
                 d_attachment["embeds"] = view_object.embeds
@@ -148,7 +149,7 @@ class ViewController:
                 d_attachment["view"] = v
             return d_attachment
 
-        d_file: ViewObjectDictWithFiles = {}
+        d_file: "ViewObjectDictWithFiles" = {}
         d_file["content"] = view_object.content
         if view_object.embeds:
             d_file["embeds"] = view_object.embeds

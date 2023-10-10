@@ -1,14 +1,13 @@
 import asyncio
 from typing import TYPE_CHECKING
 
-import discord
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, Field
 
 from .utils import get_logger
 
-# from components.ui.state import State
-
 if TYPE_CHECKING:
+    from discord import Embed, File, Interaction, ui
+
     from .controller import ViewController
 
 
@@ -35,11 +34,11 @@ class ViewObject(BaseModel):
     """
 
     content: str = Field(default="")
-    embeds: list[discord.Embed] | None = Field(default=None)
-    files: list[discord.File] | None = Field(default=None)
-    components: list[discord.ui.Item] | None = Field(default=None)
+    embeds: "list[Embed] | None" = Field(default=None)
+    files: "list[File] | None" = Field(default=None)
+    components: "list[ui.Item] | None" = Field(default=None)
 
-    model_config = ConfigDict(arbitrary_types_allowed=True)
+    model_config = {"arbitrary_types_allowed": True}
 
 
 class View:
@@ -99,7 +98,7 @@ class View:
         else:
             self.__logger.warning("Controller is not set")
 
-    async def on_error(self, interaction: discord.Interaction, error: Exception, item: discord.ui.Item) -> None:
+    async def on_error(self, interaction: "Interaction", error: Exception, item: "ui.Item") -> None:
         """
         on_error is called when an error occurs in the view.
 

@@ -1,6 +1,7 @@
-from typing import TypedDict
+from typing import TYPE_CHECKING, TypedDict
 
-import discord
+if TYPE_CHECKING:
+    from discord import Embed, File, ui
 
 
 class _ViewObjectDict(TypedDict, total=False):
@@ -22,25 +23,13 @@ class _ViewObjectDict(TypedDict, total=False):
     """
 
     content: str
-    embeds: list[discord.Embed]
-    view: discord.ui.View
+    embeds: "list[Embed]"
+    view: "ui.View"
 
 
-class ViewObjectDictWithAttachment(_ViewObjectDict, total=False):
-    """
-    ViewObjectDictWithAttachment is a type hint for the dictionary that is used to send a view to Discord.
-
-    This is suitable for `discord.abc.Messageable.edit()` as unpacked keyword arguments.
-    """
-
-    attachments: list[discord.File]
+class ViewObjectDictWithAttachment(_ViewObjectDict, total=False):  # noqa: D101
+    attachments: "list[File]"
 
 
-class ViewObjectDictWithFiles(_ViewObjectDict, total=False):
-    """
-    ViewObjectDictWithFiles is a type hint for the dictionary that is used to send a view to Discord.
-
-    This is suitable for `discord.abc.Messageable.send()` as unpacked keyword arguments.
-    """
-
-    files: list[discord.File]
+class ViewObjectDictWithFiles(_ViewObjectDict, total=False):  # noqa: D101
+    files: "list[File]"
