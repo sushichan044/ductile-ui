@@ -9,6 +9,8 @@ if TYPE_CHECKING:
 
 
 class InteractionController(ViewController):
+    """InteractionController is a class that controls the view with `discord.abc.Messageable`."""
+
     def __init__(
         self,
         view: "View",
@@ -22,6 +24,7 @@ class InteractionController(ViewController):
         self.__ephemeral = ephemeral
 
     async def send(self) -> None:
+        """Send the view to the channel."""
         target = self.__interaction
         view_kwargs = self._process_view_for_discord("files")
 

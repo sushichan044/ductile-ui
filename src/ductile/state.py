@@ -19,8 +19,8 @@ class State(Generic[T]):
     """
     A class representing a state with a generic type T.
 
-    Methods:
-    --------
+    Methods
+    -------
     __call__() -> `T`:
         Returns the current value of the state.
     get_state() -> `T`:
@@ -39,7 +39,7 @@ class State(Generic[T]):
 
     def __call__(self) -> T:
         """
-        Returns the current value of the state. equivalent to `State.get_state()`.
+        Return the current value of the state. equivalent to `State.get_state()`.
 
         Returns
         -------
@@ -50,7 +50,7 @@ class State(Generic[T]):
 
     def get_state(self) -> T:
         """
-        Returns the current value of the state.
+        Return the current value of the state.
 
         Returns
         -------
@@ -61,7 +61,7 @@ class State(Generic[T]):
 
     def set_state(self, new_value: T | Callable[[T], T]) -> None:
         """
-        Sets the current value of the state to the new value.
+        Set the current value of the state to the new value.
 
         After the state is changed, this method calls `View.sync()` to synchronize the view with the controller.
 
