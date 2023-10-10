@@ -7,6 +7,21 @@ __all__ = [
 
 
 def get_logger(name: str, level: str = "DEBUG") -> logging.Logger:  # name: __name__
+    """
+    Get a logger with a stream handler.
+
+    Parameters
+    ----------
+    name : str
+        logger name. Usually __name__.
+    level : str, optional
+        logging level, by default "DEBUG"
+
+    Returns
+    -------
+    logging.Logger
+        _description_
+    """
     logger = logging.getLogger(name)
     stream_handler = logging.StreamHandler()
 

@@ -19,19 +19,20 @@ class State(Generic[T]):
     """
     A class representing a state with a generic type T.
 
-    Methods:
-    --------
+    Methods
+    -------
     __call__() -> `T`:
-        Returns the current value of the state.
+        Return the current value of the state.
     get_state() -> `T`:
-        Returns the current value of the state.
+        Return the current value of the state.
     set_state(new_value: `T | Callable[[T], T]`) -> `None`:
-        Sets the current value of the state to the new value.
+        Set the current value of the state to the new value.
     """
 
     def __init__(self, initial_value: T, view: "View", /, *, loop: asyncio.AbstractEventLoop | None = None) -> None:
-        self._initial_value: T = initial_value
-        self._current_value: T = self._initial_value
+        self.__initial_value: T = initial_value
+        self.__current_value: T = initial_value
+        self.__previous_value: T | None = None
 
         self._loop = loop or asyncio.get_event_loop()
         self._view = view
@@ -39,7 +40,7 @@ class State(Generic[T]):
 
     def __call__(self) -> T:
         """
-        Returns the current value of the state. equivalent to `State.get_state()`.
+        Return the current value of the state. equivalent to `State.get_state()`.
 
         Returns
         -------
@@ -48,9 +49,36 @@ class State(Generic[T]):
         """
         return self.get_state()
 
+    @property
+    def _current_value(self) -> T:
+        """
+        property: The current value of the state.
+
+        Returns
+        -------
+        T
+            The current value of the state.
+        """
+        return self.__current_value
+
+    @_current_value.setter
+    def _current_value(self, new_value: T) -> None:
+        """
+        Set the current value of the state to the new value.
+
+        This method automatically sets the previous value of the state to the current value of the state.
+
+        Parameters
+        ----------
+        new_value : T
+            The new value of the state.
+        """
+        self.__previous_value = self.__current_value
+        self.__current_value = new_value
+
     def get_state(self) -> T:
         """
-        Returns the current value of the state.
+        Return the current value of the state.
 
         Returns
         -------
@@ -61,7 +89,7 @@ class State(Generic[T]):
 
     def set_state(self, new_value: T | Callable[[T], T]) -> None:
         """
-        Sets the current value of the state to the new value.
+        Set the current value of the state to the new value.
 
         After the state is changed, this method calls `View.sync()` to synchronize the view with the controller.
 
@@ -89,7 +117,21 @@ class State(Generic[T]):
         msg = f"State changed: {self._current_value} -> {_new_value}"
         self._logger.debug(msg)
         self._current_value = _new_value
+        self.__sync()
 
+    def revert_state(self) -> None:
+        """
+        Revert the current value of the state to the previous value.
+
+        After the state is changed, this method calls `View.sync()` to synchronize the view with the controller.
+        """
+        if self.__previous_value is not None:
+            self._current_value = self.__previous_value
+            self.__sync()
+        else:
+            self._logger.warning("No previous value")
+
+    def __sync(self) -> None:
         if self._view:
             self._view.sync()
         else:

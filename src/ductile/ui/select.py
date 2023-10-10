@@ -1,13 +1,14 @@
 from typing import TYPE_CHECKING, Literal, TypedDict
 
-from discord import Emoji, Interaction, PartialEmoji, ui
 from discord import SelectOption as _SelectOption
-from discord.enums import ChannelType
-from pydantic import BaseModel, ConfigDict, Field
+from discord import ui
+from pydantic import BaseModel, Field
 
 from ..utils import call_any_function  # noqa: TID252
 
 if TYPE_CHECKING:
+    from discord import ChannelType, Emoji, Interaction, PartialEmoji
+
     from ..types import (  # noqa: TID252
         ChannelSelectCallback,
         MentionableSelectCallback,
@@ -18,47 +19,65 @@ if TYPE_CHECKING:
 
 
 class SelectStyle(TypedDict, total=False):
+    """SelectStyle is a TypedDict that represents the style of a select."""
+
     disabled: bool
     placeholder: str | None
     row: Literal[0, 1, 2, 3, 4]
 
 
 class SelectOption(BaseModel):
+    """
+    SelectOption is a class that represents a select option.
+
+    This class extends the `pydantic.BaseModel` class and has validation.
+    """
+
     label: str = Field(min_length=1, max_length=100)
     value: str | None = Field(default=None, min_length=1, max_length=100)
     description: str | None = Field(default=None, min_length=1, max_length=100)
-    emoji: str | Emoji | PartialEmoji | None = Field(default=None)
+    emoji: "str | Emoji | PartialEmoji | None" = Field(default=None)
     selected_by_default: bool = Field(default=False)
 
-    model_config = ConfigDict(arbitrary_types_allowed=True)
+    model_config = {"arbitrary_types_allowed": True}
 
 
 class SelectConfigBase(TypedDict, total=False):
+    """SelectConfigBase is a TypedDict that represents the config of a select."""
+
     min_values: int | None
     max_values: int | None
 
 
 class SelectConfig(SelectConfigBase):
-    pass
+    """SelectConfig is a class that represents the config of a select."""
 
 
 class ChannelSelectConfig(SelectConfigBase):
-    channel_types: list[ChannelType]
+    """ChannelSelectConfig is a class that represents the config of a channel select."""
+
+    channel_types: "list[ChannelType]"
 
 
 class RoleSelectConfig(SelectConfigBase):
-    pass
+    """RoleSelectConfig is a class that represents the config of a role select."""
 
 
 class MentionableSelectConfig(SelectConfigBase):
-    pass
+    """MentionableSelectConfig is a class that represents the config of a mentionable select."""
 
 
 class UserSelectConfig(SelectConfigBase):
-    pass
+    """UserSelectConfig is a class that represents the config of a user select."""
 
 
 class Select(ui.Select):
+    """
+    Select is a class that represents a select.
+
+    This class has compatibility with the `discord.ui.Select` class.
+    """
+
     def __init__(  # noqa: PLR0913
         self,
         *,
@@ -93,12 +112,18 @@ class Select(ui.Select):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: Interaction) -> None:
+    async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
         if self.__callback_fn:
             await call_any_function(self.__callback_fn, interaction, self.values)
 
 
 class ChannelSelect(ui.ChannelSelect):
+    """
+    ChannelSelect is a class that represents a channel select.
+
+    This class has compatibility with the `discord.ui.ChannelSelect` class.
+    """
+
     def __init__(
         self,
         *,
@@ -123,12 +148,18 @@ class ChannelSelect(ui.ChannelSelect):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: Interaction) -> None:
+    async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
         if self.__callback_fn:
             await call_any_function(self.__callback_fn, interaction, self.values)
 
 
 class RoleSelect(ui.RoleSelect):
+    """
+    RoleSelect is a class that represents a role select.
+
+    This class has compatibility with the `discord.ui.RoleSelect` class.
+    """
+
     def __init__(
         self,
         *,
@@ -152,12 +183,19 @@ class RoleSelect(ui.RoleSelect):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: Interaction) -> None:
+    async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
         if self.__callback_fn:
             await call_any_function(self.__callback_fn, interaction, self.values)
 
 
 class MentionableSelect(ui.MentionableSelect):
+    """
+    MentionableSelect is a class that represents a mentionable select.
+
+    This class has compatibility with the `discord.ui.MentionableSelect` class.
+
+    """
+
     def __init__(
         self,
         *,
@@ -181,12 +219,18 @@ class MentionableSelect(ui.MentionableSelect):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: Interaction) -> None:
+    async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
         if self.__callback_fn:
             await call_any_function(self.__callback_fn, interaction, self.values)
 
 
 class UserSelect(ui.UserSelect):
+    """
+    UserSelect is a class that represents a user select.
+
+    This class has compatibility with the `discord.ui.UserSelect` class.
+    """
+
     def __init__(
         self,
         *,
@@ -210,6 +254,6 @@ class UserSelect(ui.UserSelect):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: Interaction) -> None:
+    async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
         if self.__callback_fn:
             await call_any_function(self.__callback_fn, interaction, self.values)
