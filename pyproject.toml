@@ -17,6 +17,7 @@ pydantic = "^2.4.2"
 black = "^23.9.1"
 pre-commit = "^3.4.0"
 ruff = "^0.0.292"
+poethepoet = "^0.24.1"
 
 [tool.black]
 target-version = ["py310"]
@@ -45,6 +46,13 @@ select = ["ALL"]
     "INP001", # add __init__.py to tests directory is too much work
     "S101",   # allow to use assert in tests
 ]
+
+
+[tool.poe.tasks]
+install = "poetry run pre-commit install"
+lint = "poetry run ruff check ./src"
+format = "poetry run black ./src"
+export = "poetry export -f requirements.txt -o requirements.txt --only main --without-hashes"
 
 
 [build-system]
