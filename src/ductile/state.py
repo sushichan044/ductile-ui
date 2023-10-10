@@ -22,11 +22,11 @@ class State(Generic[T]):
     Methods
     -------
     __call__() -> `T`:
-        Returns the current value of the state.
+        Return the current value of the state.
     get_state() -> `T`:
-        Returns the current value of the state.
+        Return the current value of the state.
     set_state(new_value: `T | Callable[[T], T]`) -> `None`:
-        Sets the current value of the state to the new value.
+        Set the current value of the state to the new value.
     """
 
     def __init__(self, initial_value: T, view: "View", /, *, loop: asyncio.AbstractEventLoop | None = None) -> None:
@@ -64,7 +64,7 @@ class State(Generic[T]):
     @_current_value.setter
     def _current_value(self, new_value: T) -> None:
         """
-        Sets the current value of the state to the new value.
+        Set the current value of the state to the new value.
 
         This method automatically sets the previous value of the state to the current value of the state.
 
@@ -121,7 +121,7 @@ class State(Generic[T]):
 
     def revert_state(self) -> None:
         """
-        Reverts the current value of the state to the previous value.
+        Revert the current value of the state to the previous value.
 
         After the state is changed, this method calls `View.sync()` to synchronize the view with the controller.
         """
