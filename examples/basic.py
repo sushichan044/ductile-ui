@@ -18,7 +18,7 @@ class Bot(commands.Bot):
         print("Ready!")  # noqa: T201
 
 
-class Counter(View):
+class CounterView(View):
     def __init__(self) -> None:
         super().__init__()
         # state value type will be inferred from the initial value
@@ -68,7 +68,7 @@ bot = Bot()
 @bot.command(name="counter")
 async def send_counter(ctx: commands.Context) -> None:
     # use controller to send and control View.
-    controller = MessageableController(Counter(), messageable=ctx.channel)
+    controller = MessageableController(CounterView(), messageable=ctx.channel)
     await controller.send()
 
     # await controller.wait returns a ViewResult, when View.stop is called.
