@@ -3,7 +3,7 @@
 
 import discord
 from discord.ext import commands
-from ductile.controller.messageable_controller import MessageableController
+from ductile.controller import MessageableController
 from ductile.state import State
 from ductile.ui import Button
 from ductile.view import View, ViewObject
