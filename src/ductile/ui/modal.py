@@ -1,8 +1,10 @@
 from typing import TYPE_CHECKING, Literal, TypedDict
 
-from discord import Interaction, TextStyle, ui
+from discord import TextStyle, ui
 
 if TYPE_CHECKING:
+    from discord import Interaction
+
     from ..types import ModalCallback  # noqa: TID252
 
 
@@ -66,6 +68,6 @@ class Modal(ui.Modal):
         for _in in self.__inputs:
             self.add_item(_in)
 
-    async def on_submit(self, interaction: Interaction) -> None:
+    async def on_submit(self, interaction: "Interaction") -> None:
         if self.__callback_fn:
             await self.__callback_fn(interaction, {i.label: i.value for i in self.__inputs})

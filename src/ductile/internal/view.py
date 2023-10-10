@@ -1,10 +1,10 @@
 from typing import TYPE_CHECKING
 
 from discord import ui
-from discord.interactions import Interaction
-from discord.ui.item import Item
 
 if TYPE_CHECKING:
+    from discord import Interaction
+
     from ..types import ViewErrorHandler, ViewTimeoutHandler  # noqa: TID252
 
 __all__ = [
@@ -24,7 +24,7 @@ class _InternalView(ui.View):
         self.__on_error = on_error
         self.__on_timeout = on_timeout
 
-    async def on_error(self, interaction: Interaction, error: Exception, item: Item) -> None:
+    async def on_error(self, interaction: "Interaction", error: Exception, item: ui.Item) -> None:
         if self.__on_error:
             await self.__on_error(interaction, error, item)
 
