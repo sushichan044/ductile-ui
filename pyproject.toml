@@ -17,6 +17,7 @@ pydantic = "^2.4.2"
 black = "^23.9.1"
 pre-commit = "^3.4.0"
 ruff = "^0.0.292"
+poethepoet = "^0.24.1"
 
 [tool.black]
 target-version = ["py310"]
@@ -28,7 +29,9 @@ target-version = "py310"
 line-length = 125
 ignore = [
     "E203",
-    "D",
+    # "D",
+    "D100",
+    "D104",
     "RUF001",  # 全角記号など`ambiguous unicode character`も使いたいため
     "RUF002",  # 全角記号など`ambiguous unicode character`も使いたいため
     "RUF003",  # 全角記号など`ambiguous unicode character`も使いたいため
@@ -39,12 +42,22 @@ ignore = [
 ]
 select = ["ALL"]
 
+[tool.ruff.pydocstyle]
+convention = "numpy"
+
 
 [tool.ruff.per-file-ignores]
 "/**/tests/**" = [
     "INP001", # add __init__.py to tests directory is too much work
     "S101",   # allow to use assert in tests
 ]
+
+
+[tool.poe.tasks]
+install = "poetry run pre-commit install"
+lint = "poetry run ruff check ./src"
+format = "poetry run black ./src"
+export = "poetry export -f requirements.txt -o requirements.txt --only main --without-hashes"
 
 
 [build-system]

@@ -1,14 +1,13 @@
 import asyncio
 from typing import TYPE_CHECKING
 
-import discord
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, Field
 
 from .utils import get_logger
 
-# from components.ui.state import State
-
 if TYPE_CHECKING:
+    from discord import Embed, File, Interaction, ui
+
     from .controller import ViewController
 
 
@@ -22,8 +21,8 @@ class ViewObject(BaseModel):
     """
     A class representing a view object that can be sent as a message in Discord.
 
-    Attributes:
-    -----------
+    Attributes
+    ----------
     content : `str`
         The content of the message.
     embeds : `list[discord.Embed] | None`
@@ -35,20 +34,21 @@ class ViewObject(BaseModel):
     """
 
     content: str = Field(default="")
-    embeds: list[discord.Embed] | None = Field(default=None)
-    files: list[discord.File] | None = Field(default=None)
-    components: list[discord.ui.Item] | None = Field(default=None)
+    embeds: "list[Embed] | None" = Field(default=None)
+    files: "list[File] | None" = Field(default=None)
+    components: "list[ui.Item] | None" = Field(default=None)
 
-    model_config = ConfigDict(arbitrary_types_allowed=True)
+    model_config = {"arbitrary_types_allowed": True}
 
 
 class View:
     """
-    The View class represents the user interface of the UI. It is responsible for rendering the UI and
+    The View class represents the user interface of the UI. It is responsible for rendering the UI and.
+
     handling user interactions.
 
     Attributes
-    -------
+    ----------
     message : `discord.Message | None`
         The message containing the UI. None if the UI has not been sent yet.
 
@@ -76,7 +76,7 @@ class View:
 
     def render(self) -> ViewObject:
         """
-        Renders the view and returns a ViewObject. This method is called by `Controller`.
+        Render the view and returns a ViewObject. This method is called by `Controller`.
 
         Returns
         -------
@@ -85,24 +85,20 @@ class View:
         return ViewObject()
 
     def sync(self) -> None:
-        """
-        Synchronize the view with the controller. This method is called by `State` when its value changes.
-        """
+        """Synchronize the view with the controller. This method is called by `State` when its value changes."""
         if self._controller:
             self._loop.create_task(self._controller.sync())
         else:
             self.__logger.warning("Controller is not set")
 
     def stop(self) -> None:
-        """
-        Stops the view. This method is called by child components implicitly.
-        """
+        """Stop the view. This method is called by child components implicitly."""
         if self._controller:
             self._controller.stop()
         else:
             self.__logger.warning("Controller is not set")
 
-    async def on_error(self, interaction: discord.Interaction, error: Exception, item: discord.ui.Item) -> None:
+    async def on_error(self, interaction: "Interaction", error: Exception, item: "ui.Item") -> None:
         """
         on_error is called when an error occurs in the view.
 
@@ -117,6 +113,4 @@ class View:
         """
 
     async def on_timeout(self) -> None:
-        """
-        on_timeout is called when the view times out.
-        """
+        """on_timeout is called when the view times out."""
