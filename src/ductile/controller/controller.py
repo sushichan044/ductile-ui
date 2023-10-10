@@ -13,11 +13,22 @@ if TYPE_CHECKING:
 
 
 class ViewResult(NamedTuple):
+    """
+    ViewResult is a named tuple representing the result of the view.
+
+    Parameters
+    ----------
+    NamedTuple : `ViewResult`
+        The result of the view.
+    """
+
     timed_out: bool
     states: dict[str, Any]
 
 
 class ViewController:
+    """ViewController is a class that controls the view."""
+
     def __init__(self, view: "View", *, timeout: float | None = 180) -> None:
         self.__view = view
         view._controller = self  # noqa: SLF001
@@ -41,13 +52,19 @@ class ViewController:
         self.__message = value
 
     async def send(self) -> None:
+        """
+        Send the view to the channel.
+
+        Raises
+        ------
+        NotImplementedError
+            If this method is not implemented in subclasses.
+        """
         # implement this in subclasses
         raise NotImplementedError
 
     async def sync(self) -> None:
-        """
-        Sync the message with current view.
-        """
+        """Sync the message with current view."""
         if self.message is None:
             return
 
@@ -56,9 +73,7 @@ class ViewController:
         self.message = await self.message.edit(**d)
 
     def stop(self) -> None:
-        """
-        Stop the view and return the state of all states in the view.
-        """
+        """Stop the view and return the state of all states in the view."""
         self.__raw_view.stop()
 
     async def wait(self) -> ViewResult:

@@ -29,7 +29,9 @@ target-version = "py310"
 line-length = 125
 ignore = [
     "E203",
-    "D",
+    # "D",
+    "D100",
+    "D104",
     "RUF001",  # 全角記号など`ambiguous unicode character`も使いたいため
     "RUF002",  # 全角記号など`ambiguous unicode character`も使いたいため
     "RUF003",  # 全角記号など`ambiguous unicode character`も使いたいため
@@ -39,6 +41,9 @@ ignore = [
     "ERA",     # : 役立つこともあるが、コメントアウトしていないコードも警告されるので無視する
 ]
 select = ["ALL"]
+
+[tool.ruff.pydocstyle]
+convention = "numpy"
 
 
 [tool.ruff.per-file-ignores]

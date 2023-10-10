@@ -9,6 +9,8 @@ if TYPE_CHECKING:
 
 
 class TextInputStyle(TypedDict, total=False):
+    """TextInputStyle is a TypedDict that represents the style of a text input."""
+
     field: Literal["short", "long"]
     placeholder: str | None
     default: str | None
@@ -16,12 +18,21 @@ class TextInputStyle(TypedDict, total=False):
 
 
 class TextInputConfig(TypedDict, total=False):
+    """TextInputConfig is a TypedDict that represents the config of a text input."""
+
     required: bool
     min_length: int | None
     max_length: int | None
 
 
 class TextInput(ui.TextInput):
+    """
+    TextInput is a class that represents a text input.
+
+    This class has compatibility with the `discord.ui.TextInput` class.
+
+    """
+
     def __init__(
         self,
         label: str,
@@ -47,6 +58,12 @@ class TextInput(ui.TextInput):
 
 
 class Modal(ui.Modal):
+    """
+    Modal is a class that represents a modal.
+
+    This class has compatibility with the `discord.ui.Modal` class.
+    """
+
     def __init__(  # noqa: PLR0913
         self,
         *,
@@ -68,6 +85,6 @@ class Modal(ui.Modal):
         for _in in self.__inputs:
             self.add_item(_in)
 
-    async def on_submit(self, interaction: "Interaction") -> None:
+    async def on_submit(self, interaction: "Interaction") -> None:  # noqa: D102
         if self.__callback_fn:
             await self.__callback_fn(interaction, {i.label: i.value for i in self.__inputs})
