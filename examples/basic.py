@@ -3,10 +3,9 @@
 
 import discord
 from discord.ext import commands
+from ductile import State, View, ViewObject
 from ductile.controller import MessageableController
-from ductile.state import State
 from ductile.ui import Button
-from ductile.view import View, ViewObject
 
 
 class Bot(commands.Bot):
@@ -45,6 +44,11 @@ class CounterView(View):
             await interaction.response.defer()
             self.count.set_state(lambda x: x - 1)
 
+        async def handle_reset(interaction: discord.Interaction) -> None:
+            await interaction.response.defer()
+            # also you can pass new value to State.set_state.
+            self.count.set_state(0)
+
         async def stop(interaction: discord.Interaction) -> None:
             await interaction.response.defer()
             # stop the view. this will cause View.wait to return.
@@ -55,9 +59,11 @@ class CounterView(View):
             embeds=[e],
             components=[
                 # components are fully typed with TypedDict.
-                Button("+1", style={"color": "grey"}, on_click=handle_increment),
-                Button("-1", style={"color": "grey"}, on_click=handle_decrement),
-                Button("stop", style={"color": "red"}, on_click=stop),
+                Button("+1", style={"color": "blurple"}, on_click=handle_increment),
+                Button("-1", style={"color": "blurple"}, on_click=handle_decrement),
+                # you can set style with conditional expression.
+                Button("reset", style={"color": "grey", "disabled": self.count.get_state() == 0}, on_click=handle_reset),
+                Button("stop", style={"color": "red", "row": 1}, on_click=stop),
             ],
         )
 
