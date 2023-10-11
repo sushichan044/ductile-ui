@@ -1,13 +1,13 @@
 from typing import TYPE_CHECKING, Literal, TypedDict
 
+from discord import Emoji, PartialEmoji, ui
 from discord import SelectOption as _SelectOption
-from discord import ui
 from pydantic import BaseModel, Field
 
 from ..utils import call_any_function  # noqa: TID252
 
 if TYPE_CHECKING:
-    from discord import ChannelType, Emoji, Interaction, PartialEmoji
+    from discord import ChannelType, Interaction
 
     from ..types import (  # noqa: TID252
         ChannelSelectCallback,
@@ -36,7 +36,7 @@ class SelectOption(BaseModel):
     label: str = Field(min_length=1, max_length=100)
     value: str | None = Field(default=None, min_length=1, max_length=100)
     description: str | None = Field(default=None, min_length=1, max_length=100)
-    emoji: "str | Emoji | PartialEmoji | None" = Field(default=None)
+    emoji: str | Emoji | PartialEmoji | None = Field(default=None)
     selected_by_default: bool = Field(default=False)
 
     model_config = {"arbitrary_types_allowed": True}

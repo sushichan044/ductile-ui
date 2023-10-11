@@ -1,12 +1,13 @@
 import asyncio
 from typing import TYPE_CHECKING
 
+from discord import Embed, File, ui
 from pydantic import BaseModel, Field
 
 from .utils import get_logger
 
 if TYPE_CHECKING:
-    from discord import Embed, File, Interaction, ui
+    from discord import Interaction
 
     from .controller import ViewController
 
@@ -34,9 +35,9 @@ class ViewObject(BaseModel):
     """
 
     content: str = Field(default="")
-    embeds: "list[Embed] | None" = Field(default=None)
-    files: "list[File] | None" = Field(default=None)
-    components: "list[ui.Item] | None" = Field(default=None)
+    embeds: list[Embed] | None = Field(default=None)
+    files: list[File] | None = Field(default=None)
+    components: list[ui.Item] | None = Field(default=None)
 
     model_config = {"arbitrary_types_allowed": True}
 

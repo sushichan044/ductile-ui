@@ -1,6 +1,6 @@
 import asyncio
 from collections.abc import Callable
-from typing import TYPE_CHECKING, Any, Generic, NamedTuple, TypeVar
+from typing import TYPE_CHECKING, Any, Generic, TypeVar
 
 from .utils import get_logger
 
@@ -138,17 +138,17 @@ class State(Generic[T]):
             self._logger.warning("View is not set")
 
 
-class UseStateTuple(NamedTuple, Generic[T]):
-    state: State[T]
-    set_state: Callable[[T | Callable[[T], T]], None]
+# class UseStateTuple(NamedTuple, Generic[T]):
+#     state: State[T]
+#     set_state: Callable[[T | Callable[[T], T]], None]
 
 
-def use_state(
-    initial_value: T,
-    view: "View",
-    /,
-    *,
-    loop: asyncio.AbstractEventLoop | None = None,
-) -> UseStateTuple[T]:
-    s = State[T](initial_value, view, loop=loop)
-    return UseStateTuple(state=s, set_state=s.set_state)
+# def use_state(
+#     initial_value: T,
+#     view: "View",
+#     /,
+#     *,
+#     loop: asyncio.AbstractEventLoop | None = None,
+# ) -> UseStateTuple[T]:
+#     s = State[T](initial_value, view, loop=loop)
+#     return UseStateTuple(state=s, set_state=s.set_state)
