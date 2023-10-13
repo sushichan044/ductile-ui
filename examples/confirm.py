@@ -1,8 +1,6 @@
 # This example requires the 'message_content' privileged intent to function.
 
 
-import asyncio
-
 import discord
 from discord.ext import commands
 from ductile import State, View, ViewObject
@@ -23,6 +21,7 @@ class ConfirmView(View):
     def __init__(self) -> None:
         super().__init__()
         self.approved = State[bool | None](None, self)
+        self.description = State("Are you sure?", self)
 
     def render(self) -> ViewObject:
         async def handle_approve(interaction: discord.Interaction) -> None:
@@ -36,7 +35,7 @@ class ConfirmView(View):
             self.stop()
 
         return ViewObject(
-            embeds=[discord.Embed(title="Confirm", description="Are you sure?")],
+            embeds=[discord.Embed(title="Confirm", description=self.description())],
             components=[
                 Button("yes", style={"color": "green", "disabled": self.approved() is not None}, on_click=handle_approve),
                 Button("no", style={"color": "red", "disabled": self.approved() is not None}, on_click=handle_deny),
@@ -44,7 +43,7 @@ class ConfirmView(View):
         )
 
     async def on_timeout(self) -> None:
-        print("Timed out")  # noqa: T201
+        self.description.set_state("Timed out.")
         self.approved.set_state(False)  # noqa: FBT003
         self.stop()
 
@@ -74,8 +73,6 @@ class SomeBreakingView(View):
             controller = InteractionController(view, interaction=interaction, timeout=60, ephemeral=True)
             await controller.send()
             await controller.wait()
-            # This sleep is workaround. see details at https://github.com/sushi-chaaaan/ductile-ui/issues/23
-            await asyncio.sleep(3.0)
             self.approved.set_state(view.approved())
 
         return ViewObject(
@@ -105,4 +102,4 @@ async def send_counter(ctx: commands.Context) -> None:
     await controller.wait()
 
 
-bot.run("MY_COOL_BOT_TOKEN")
+bot.run("MTE2MTUzOTQyMzg5NzM4NzAyOQ.GoAzw6.Okx6ZDcHIpPZhExWb54aiHZ-BYHZtJMf0hqSBY")

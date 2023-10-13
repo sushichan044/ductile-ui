@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Any, Literal, NamedTuple, overload
 
 from ..internal import _InternalView  # noqa: TID252
 from ..state import State  # noqa: TID252
+from ..utils import wait_tasks_by_name  # noqa: TID252
 
 if TYPE_CHECKING:
     from collections.abc import Generator
@@ -89,12 +90,16 @@ class ViewController:
 
             `states` is a dictionary of all states in the view.
         """
-        timed_out = await self.__raw_view.wait()
+        is_timed_out = await self.__raw_view.wait()
+
+        # this is got from discord.ui.View._dispatch_timeout()
+        timeout_task_name = f"discord-ui-view-timeout-{self.__raw_view.id}"
+        await wait_tasks_by_name([timeout_task_name])
 
         d = {}
         for key, state in self._get_all_state_in_view():
             d[key] = state.get_state()
-        return ViewResult(timed_out, d)
+        return ViewResult(is_timed_out, d)
 
     def _get_all_state_in_view(self) -> "Generator[tuple[str, State[Any]], None, None]":
         for k, v in self.__view.__dict__.items():
