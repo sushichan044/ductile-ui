@@ -102,4 +102,4 @@ async def send_counter(ctx: commands.Context) -> None:
     await controller.wait()
 
 
-bot.run("MTE2MTUzOTQyMzg5NzM4NzAyOQ.GoAzw6.Okx6ZDcHIpPZhExWb54aiHZ-BYHZtJMf0hqSBY")
+bot.run("MY_COOL_BOT_TOKEN")
