@@ -2,10 +2,12 @@ from typing import TYPE_CHECKING, Literal, TypedDict
 
 from discord import TextStyle, ui
 
+from ..utils import call_any_function, is_sync_func  # noqa: TID252
+
 if TYPE_CHECKING:
     from discord import Interaction
 
-    from ..types import ModalCallback  # noqa: TID252
+    from ..types import ModalCallback, ModalSyncCallback  # noqa: TID252
 
 
 class TextInputStyle(TypedDict, total=False):
@@ -71,7 +73,7 @@ class Modal(ui.Modal):
         inputs: list[TextInput],
         timeout: float | None = None,
         custom_id: str | None = None,
-        on_submit: "ModalCallback | None" = None,
+        on_submit: "ModalCallback | ModalSyncCallback | None" = None,
     ) -> None:
         __d = {
             "title": title,
@@ -86,5 +88,11 @@ class Modal(ui.Modal):
             self.add_item(_in)
 
     async def on_submit(self, interaction: "Interaction") -> None:  # noqa: D102
-        if self.__callback_fn:
-            await self.__callback_fn(interaction, {i.label: i.value for i in self.__inputs})
+        if self.__callback_fn is None:
+            await interaction.response.defer()
+            return
+
+        if is_sync_func(self.__callback_fn):
+            await interaction.response.defer()
+
+        await call_any_function(self.__callback_fn, interaction, {i.label: i.value for i in self.__inputs})
