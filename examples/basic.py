@@ -1,6 +1,8 @@
 # This example requires the 'message_content' privileged intent to function.
 
 
+import random
+
 import discord
 from discord.ext import commands
 from ductile import State, View, ViewObject
@@ -59,10 +61,22 @@ class CounterView(View):
             embeds=[e],
             components=[
                 # components are fully typed with TypedDict.
-                Button("+1", style={"color": "blurple"}, on_click=handle_increment),
-                Button("-1", style={"color": "blurple"}, on_click=handle_decrement),
-                # you can set style with conditional expression.
-                Button("reset", style={"color": "grey", "disabled": self.count.get_state() == 0}, on_click=handle_reset),
+                # you can pass callback to Button.on_click.
+                Button("+1", style={"color": "blurple", "row": 0}, on_click=handle_increment),
+                Button("-1", style={"color": "blurple", "row": 0}, on_click=handle_decrement),
+                Button(
+                    "reset",
+                    # you can set style with conditional expression.
+                    style={"color": "grey", "row": 1, "disabled": self.count.get_state() == 0},
+                    on_click=handle_reset,
+                ),
+                Button(
+                    "random",
+                    style={"color": "green", "row": 1},
+                    # if you passed synchronous function to Button.on_click,
+                    # library automatically calls `await interaction.response.defer()`.
+                    on_click=lambda _: self.count.set_state(random.randint(0, 100)),  # noqa: S311
+                ),
                 Button("stop", style={"color": "red", "row": 1}, on_click=stop),
             ],
         )
