@@ -3,12 +3,12 @@ from typing import TYPE_CHECKING, Literal, TypedDict
 from discord import ButtonStyle as _ButtonStyle
 from discord import ui
 
-from ..utils import call_any_function  # noqa: TID252
+from ..utils import call_any_function, is_sync_func  # noqa: TID252
 
 if TYPE_CHECKING:
     from discord import Emoji, Interaction, PartialEmoji
 
-    from ..types import InteractionCallback  # noqa: TID252
+    from ..types import InteractionCallback, InteractionSyncCallback  # noqa: TID252
 
 
 class _ButtonStyleRequired(TypedDict):
@@ -37,7 +37,7 @@ class Button(ui.Button):
         *,
         style: ButtonStyle,
         custom_id: str | None = None,
-        on_click: "InteractionCallback | None" = None,
+        on_click: "InteractionCallback | InteractionSyncCallback | None" = None,
     ) -> None:
         __style = _ButtonStyle[style.get("color", "grey")]
         __disabled = style.get("disabled", False)
@@ -54,8 +54,14 @@ class Button(ui.Button):
         )
 
     async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
-        if self.__callback_fn:
-            await call_any_function(self.__callback_fn, interaction)
+        if self.__callback_fn is None:
+            await interaction.response.defer()
+            return
+
+        if is_sync_func(self.__callback_fn):
+            await interaction.response.defer()
+
+        await call_any_function(self.__callback_fn, interaction)
 
 
 class LinkButton(ui.Button):

@@ -4,17 +4,22 @@ from discord import Emoji, PartialEmoji, ui
 from discord import SelectOption as _SelectOption
 from pydantic import BaseModel, Field
 
-from ..utils import call_any_function  # noqa: TID252
+from ..utils import call_any_function, is_sync_func  # noqa: TID252
 
 if TYPE_CHECKING:
     from discord import ChannelType, Interaction
 
     from ..types import (  # noqa: TID252
         ChannelSelectCallback,
+        ChannelSelectSyncCallback,
         MentionableSelectCallback,
+        MentionableSelectSyncCallback,
         RoleSelectCallback,
+        RoleSelectSyncCallback,
         SelectCallback,
+        SelectSyncCallback,
         UserSelectCallback,
+        UserSelectSyncCallback,
     )
 
 
@@ -85,7 +90,7 @@ class Select(ui.Select):
         style: SelectStyle,
         options: list[SelectOption],
         custom_id: str | None = None,
-        on_select: "SelectCallback | None" = None,
+        on_select: "SelectCallback | SelectSyncCallback | None" = None,
     ) -> None:
         __disabled = style.get("disabled", False)
         __placeholder = style.get("placeholder", None)
@@ -113,8 +118,14 @@ class Select(ui.Select):
         super().__init__(**__d)
 
     async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
-        if self.__callback_fn:
-            await call_any_function(self.__callback_fn, interaction, self.values)
+        if self.__callback_fn is None:
+            await interaction.response.defer()
+            return
+
+        if is_sync_func(self.__callback_fn):
+            await interaction.response.defer()
+
+        await call_any_function(self.__callback_fn, interaction, self.values)
 
 
 class ChannelSelect(ui.ChannelSelect):
@@ -130,7 +141,7 @@ class ChannelSelect(ui.ChannelSelect):
         config: ChannelSelectConfig,
         style: SelectStyle,
         custom_id: str | None = None,
-        on_select: "ChannelSelectCallback | None" = None,
+        on_select: "ChannelSelectCallback| ChannelSelectSyncCallback | None" = None,
     ) -> None:
         __disabled = style.get("disabled", False)
         __placeholder = style.get("placeholder", None)
@@ -149,8 +160,14 @@ class ChannelSelect(ui.ChannelSelect):
         super().__init__(**__d)
 
     async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
-        if self.__callback_fn:
-            await call_any_function(self.__callback_fn, interaction, self.values)
+        if self.__callback_fn is None:
+            await interaction.response.defer()
+            return
+
+        if is_sync_func(self.__callback_fn):
+            await interaction.response.defer()
+
+        await call_any_function(self.__callback_fn, interaction, self.values)
 
 
 class RoleSelect(ui.RoleSelect):
@@ -166,7 +183,7 @@ class RoleSelect(ui.RoleSelect):
         config: RoleSelectConfig,
         style: SelectStyle,
         custom_id: str | None = None,
-        on_select: "RoleSelectCallback | None" = None,
+        on_select: "RoleSelectCallback | RoleSelectSyncCallback | None" = None,
     ) -> None:
         __disabled = style.get("disabled", False)
         __placeholder = style.get("placeholder", None)
@@ -184,8 +201,14 @@ class RoleSelect(ui.RoleSelect):
         super().__init__(**__d)
 
     async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
-        if self.__callback_fn:
-            await call_any_function(self.__callback_fn, interaction, self.values)
+        if self.__callback_fn is None:
+            await interaction.response.defer()
+            return
+
+        if is_sync_func(self.__callback_fn):
+            await interaction.response.defer()
+
+        await call_any_function(self.__callback_fn, interaction, self.values)
 
 
 class MentionableSelect(ui.MentionableSelect):
@@ -202,7 +225,7 @@ class MentionableSelect(ui.MentionableSelect):
         config: MentionableSelectConfig,
         style: SelectStyle,
         custom_id: str | None = None,
-        on_select: "MentionableSelectCallback | None" = None,
+        on_select: "MentionableSelectCallback | MentionableSelectSyncCallback | None" = None,
     ) -> None:
         __disabled = style.get("disabled", False)
         __placeholder = style.get("placeholder", None)
@@ -220,8 +243,14 @@ class MentionableSelect(ui.MentionableSelect):
         super().__init__(**__d)
 
     async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
-        if self.__callback_fn:
-            await call_any_function(self.__callback_fn, interaction, self.values)
+        if self.__callback_fn is None:
+            await interaction.response.defer()
+            return
+
+        if is_sync_func(self.__callback_fn):
+            await interaction.response.defer()
+
+        await call_any_function(self.__callback_fn, interaction, self.values)
 
 
 class UserSelect(ui.UserSelect):
@@ -237,7 +266,7 @@ class UserSelect(ui.UserSelect):
         config: UserSelectConfig,
         style: SelectStyle,
         custom_id: str | None = None,
-        on_select: "UserSelectCallback | None" = None,
+        on_select: "UserSelectCallback | UserSelectSyncCallback | None" = None,
     ) -> None:
         __disabled = style.get("disabled", False)
         __placeholder = style.get("placeholder", None)
@@ -255,5 +284,11 @@ class UserSelect(ui.UserSelect):
         super().__init__(**__d)
 
     async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
-        if self.__callback_fn:
-            await call_any_function(self.__callback_fn, interaction, self.values)
+        if self.__callback_fn is None:
+            await interaction.response.defer()
+            return
+
+        if is_sync_func(self.__callback_fn):
+            await interaction.response.defer()
+
+        await call_any_function(self.__callback_fn, interaction, self.values)
