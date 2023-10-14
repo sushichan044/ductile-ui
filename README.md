@@ -16,6 +16,10 @@ A library provides declarative UI for [discord.py](https://github.com/Rapptz/dis
 
 **Python3.10 or higer is required**
 
+**discord.py^2.0.0 is required; any compatibility with 1.x.x is not guaranteed**
+
+Using the latest stable release of discord.py is recommended
+
 ```bash
   pip install ductile-ui
 ```
