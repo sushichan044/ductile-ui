@@ -4,12 +4,11 @@
 ![PyPI - Version](https://img.shields.io/pypi/v/ductile-ui)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ductile-ui)
 
-A library provides interactive ui for [discord.py](https://github.com/Rapptz/discord.py).
-
+A library provides declarative UI for [discord.py](https://github.com/Rapptz/discord.py).
 
 ## Features
 
-- Declarative UI
+- Declarative UI, inspired by [React](https://react.dev/).
 - Component-oriented with State
 - Fully typed
 
@@ -20,7 +19,6 @@ A library provides interactive ui for [discord.py](https://github.com/Rapptz/dis
 ```bash
   pip install ductile-ui
 ```
-
 
 ## Usage/Examples
 
