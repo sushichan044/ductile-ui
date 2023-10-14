@@ -1,7 +1,7 @@
 
 # ductile-ui
 
-![PyPI - Version](https://img.shields.io/pypi/v/ductile-ui) 
+![PyPI - Version](https://img.shields.io/pypi/v/ductile-ui)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ductile-ui)
 
 A library provides interactive ui for [discord.py](https://github.com/Rapptz/discord.py).
@@ -101,4 +101,3 @@ async def send_counter(ctx: commands.Context) -> None:
 bot.run("MY_COOL_BOT_TOKEN")
 
 ```
-
