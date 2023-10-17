@@ -92,9 +92,10 @@ class ViewController:
         """
         is_timed_out = await self.__raw_view.wait()
 
-        # this is got from discord.ui.View._dispatch_timeout()
-        timeout_task_name = f"discord-ui-view-timeout-{self.__raw_view.id}"
-        await wait_tasks_by_name([timeout_task_name])
+        if is_timed_out:
+            # this is got from discord.ui.View._dispatch_timeout()
+            timeout_task_name = f"discord-ui-view-timeout-{self.__raw_view.id}"
+            await wait_tasks_by_name([timeout_task_name])
 
         d = {}
         for key, state in self._get_all_state_in_view():
