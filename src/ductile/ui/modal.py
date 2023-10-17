@@ -1,6 +1,7 @@
-from typing import TYPE_CHECKING, Literal, TypedDict
+from typing import TYPE_CHECKING, Literal
 
 from discord import TextStyle, ui
+from typing_extensions import NotRequired, Required, TypedDict
 
 from ..utils import call_any_function, is_sync_func  # noqa: TID252
 
@@ -10,13 +11,13 @@ if TYPE_CHECKING:
     from ..types import ModalCallback, ModalSyncCallback  # noqa: TID252
 
 
-class TextInputStyle(TypedDict, total=False):
+class TextInputStyle(TypedDict):
     """TextInputStyle is a TypedDict that represents the style of a text input."""
 
-    field: Literal["short", "long"]
-    placeholder: str | None
-    default: str | None
-    row: Literal[0, 1, 2, 3, 4]
+    field: Required[Literal["short", "long"]]
+    placeholder: NotRequired[str | None]
+    default: NotRequired[str | None]
+    row: NotRequired[Literal[0, 1, 2, 3, 4]]
 
 
 class TextInputConfig(TypedDict, total=False):
