@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Literal, TypedDict
 
 from discord import Emoji, PartialEmoji, ui
 from discord import SelectOption as _SelectOption
-from pydantic import BaseModel, Field
 
 from ..utils import call_any_function, is_sync_func  # noqa: TID252
 
@@ -31,20 +30,30 @@ class SelectStyle(TypedDict, total=False):
     row: Literal[0, 1, 2, 3, 4]
 
 
-class SelectOption(BaseModel):
-    """
-    SelectOption is a class that represents a select option.
+# class SelectOption(BaseModel):
+#     """
+#     SelectOption is a class that represents a select option.
 
-    This class extends the `pydantic.BaseModel` class and has validation.
-    """
+#     This class extends the `pydantic.BaseModel` class and has validation.
+#     """
 
-    label: str = Field(min_length=1, max_length=100)
-    value: str | None = Field(default=None, min_length=1, max_length=100)
-    description: str | None = Field(default=None, min_length=1, max_length=100)
-    emoji: str | Emoji | PartialEmoji | None = Field(default=None)
-    selected_by_default: bool = Field(default=False)
+#     label: str = Field(min_length=1, max_length=100)
+#     value: str | None = Field(default=None, min_length=1, max_length=100)
+#     description: str | None = Field(default=None, min_length=1, max_length=100)
+#     emoji: str | Emoji | PartialEmoji | None = Field(default=None)
+#     selected_by_default: bool = Field(default=False)
 
-    model_config = {"arbitrary_types_allowed": True}
+#     model_config = {"arbitrary_types_allowed": True}
+
+
+class SelectOption(TypedDict, total=False):
+    """__SelectOption is a TypedDict that represents the config of a select option."""
+
+    label: str
+    value: str | None
+    description: str | None
+    emoji: str | Emoji | PartialEmoji | None
+    default: bool
 
 
 class SelectConfigBase(TypedDict, total=False):
@@ -103,11 +112,11 @@ class Select(ui.Select):
             "max_values": config.get("max_values", None),
             "options": [
                 _SelectOption(
-                    label=option.label,
-                    value=option.value or option.label,
-                    description=option.description,
-                    emoji=option.emoji,
-                    default=option.selected_by_default,
+                    label=(_label := option.get("label", "")),
+                    value=option.get("value", None) or _label,
+                    description=option.get("description", None),
+                    emoji=option.get("emoji", None),
+                    default=option.get("default", False),
                 )
                 for option in options
             ],
