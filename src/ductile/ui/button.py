@@ -1,7 +1,8 @@
-from typing import TYPE_CHECKING, Literal, TypedDict
+from typing import TYPE_CHECKING, Literal
 
 from discord import ButtonStyle as _ButtonStyle
 from discord import ui
+from typing_extensions import NotRequired, Required, TypedDict
 
 from ..utils import call_any_function, is_sync_func  # noqa: TID252
 
@@ -11,16 +12,13 @@ if TYPE_CHECKING:
     from ..types import InteractionCallback, InteractionSyncCallback  # noqa: TID252
 
 
-class _ButtonStyleRequired(TypedDict):
-    color: Literal["blurple", "grey", "green", "red"]
-
-
-class ButtonStyle(_ButtonStyleRequired, total=False):
+class ButtonStyle(TypedDict):
     """ButtonStyle is a TypedDict that represents the style of a button."""
 
-    disabled: bool
-    emoji: "str | Emoji | PartialEmoji | None"
-    row: Literal[0, 1, 2, 3, 4]
+    color: Required[Literal["blurple", "grey", "green", "red"]]
+    disabled: NotRequired[bool]
+    emoji: NotRequired["str | Emoji | PartialEmoji | None"]
+    row: NotRequired[Literal[0, 1, 2, 3, 4]]
 
 
 class Button(ui.Button):

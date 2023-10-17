@@ -1,7 +1,8 @@
-from typing import TYPE_CHECKING, Literal, TypedDict
+from typing import TYPE_CHECKING, Literal
 
 from discord import Emoji, PartialEmoji, ui
 from discord import SelectOption as _SelectOption
+from typing_extensions import NotRequired, Required, TypedDict
 
 from ..utils import call_any_function, is_sync_func  # noqa: TID252
 
@@ -46,14 +47,14 @@ class SelectStyle(TypedDict, total=False):
 #     model_config = {"arbitrary_types_allowed": True}
 
 
-class SelectOption(TypedDict, total=False):
-    """__SelectOption is a TypedDict that represents the config of a select option."""
+class SelectOption(TypedDict):
+    """SelectOption is a TypedDict that represents a select option."""
 
-    label: str
-    value: str | None
-    description: str | None
-    emoji: str | Emoji | PartialEmoji | None
-    default: bool
+    label: Required[str]
+    value: NotRequired[str | None]
+    description: NotRequired[str | None]
+    emoji: NotRequired[str | Emoji | PartialEmoji | None]
+    default: NotRequired[bool]
 
 
 class SelectConfigBase(TypedDict, total=False):
