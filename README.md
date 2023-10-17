@@ -14,9 +14,9 @@ A library provides declarative UI for [discord.py](https://github.com/Rapptz/dis
 
 ## Installation
 
-**Python3.10 or higer is required**
+**Python3.10 or higher is required**
 
-**discord.py^2.0.0 is required; any compatibility with 1.x.x is not guaranteed**
+**discord.py^2.2.0 is required; any compatibility under 2.1.x or 1.x is not guaranteed**
 
 Using the latest stable release of discord.py is recommended
 

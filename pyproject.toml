@@ -5,11 +5,13 @@ description = "A library provides interactive ui for discord.py"
 authors = ["sushi-chaaaan <mail@sushichan.live>"]
 license = "MIT"
 readme = "README.md"
+homepage = "https://github.com/sushi-chaaaan"
+repository = "https://github.com/sushi-chaaaan/ductile-ui"
 packages = [{ include = "ductile", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-discord-py = "^2.3"
+discord-py = "^2.2.0"
 pydantic = "^2.4.2"
 typing-extensions = "^4.8.0"
 
