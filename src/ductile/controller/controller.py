@@ -140,32 +140,26 @@ class ViewController:
         """
         view_object: "ViewObject" = self.__view.render()
 
-        if mode == "attachment":
-            d_attachment: "ViewObjectDictWithAttachment" = {}
-            d_attachment["content"] = view_object.content
-            if view_object.embeds:
-                d_attachment["embeds"] = view_object.embeds
-            if view_object.files:
-                d_attachment["attachments"] = view_object.files
-            if view_object.components:
-                v = self.__raw_view
-                v.clear_items()
-                for child in view_object.components:
-                    v.add_item(child)
-                d_attachment["view"] = v
-            return d_attachment
-
-        d_file: "ViewObjectDictWithFiles" = {}
-        d_file["content"] = view_object.content
-        if view_object.embeds:
-            d_file["embeds"] = view_object.embeds
-        if view_object.files:
-            d_file["files"] = view_object.files
-
+        # implicitly clear view every time see:#54
+        v = self.__raw_view
+        v.clear_items()
         if view_object.components:
-            v = self.__raw_view
-            v.clear_items()
             for child in view_object.components:
                 v.add_item(child)
-            d_file["view"] = v
-        return d_file
+
+        if mode == "attachment":
+            # implicitly clear items every time see:#54
+
+            return {
+                "content": view_object.content,
+                "embeds": view_object.embeds or [],
+                "view": v,
+                "attachments": view_object.files or [],
+            }
+
+        return {
+            "content": view_object.content,
+            "embeds": view_object.embeds or [],
+            "view": v,
+            "files": view_object.files or [],
+        }
