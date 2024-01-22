@@ -26,12 +26,12 @@ class ConfirmView(View):
     def render(self) -> ViewObject:
         async def handle_approve(interaction: discord.Interaction) -> None:
             await interaction.response.defer()
-            self.approved.set_state(True)  # noqa: FBT003
+            self.approved.set_state(True)
             self.stop()
 
         async def handle_deny(interaction: discord.Interaction) -> None:
             await interaction.response.defer()
-            self.approved.set_state(False)  # noqa: FBT003
+            self.approved.set_state(False)
             self.stop()
 
         return ViewObject(
@@ -44,7 +44,7 @@ class ConfirmView(View):
 
     async def on_timeout(self) -> None:
         self.description.set_state("Timed out.")
-        self.approved.set_state(False)  # noqa: FBT003
+        self.approved.set_state(False)
         self.stop()
 
 
