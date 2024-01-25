@@ -40,7 +40,7 @@ class SelectView(View):
 
         async def stop(interaction: discord.Interaction) -> None:
             await interaction.response.defer()
-            self.disabled.set_state(True)  # noqa: FBT003
+            self.disabled.set_state(True)
             # stop the view. this will cause View.wait to return.
             self.stop()
 
