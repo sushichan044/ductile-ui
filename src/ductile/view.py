@@ -72,7 +72,7 @@ class View:
         loop: asyncio.AbstractEventLoop | None = None,
     ) -> None:
         self._loop = loop or asyncio.get_event_loop()
-        self._controller: "ViewController | None" = None
+        self._controller: ViewController | None = None
         self.__logger = get_logger(__name__)
 
     def render(self) -> ViewObject:

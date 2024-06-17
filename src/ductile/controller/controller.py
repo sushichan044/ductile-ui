@@ -34,7 +34,7 @@ class ViewController:
         self.__view = view
         view._controller = self  # noqa: SLF001
         self.__raw_view = _InternalView(timeout=timeout, on_error=self.__view.on_error, on_timeout=self.__view.on_timeout)
-        self.__message: "Message | None" = None
+        self.__message: Message | None = None
 
     @property
     def message(self) -> "Message | None":
@@ -136,7 +136,7 @@ class ViewController:
             This can be passed to `discord.abc.Messageable.send` or `discord.abc.Messageable.edit` and etc
             as unpacked keyword arguments.
         """
-        view_object: "ViewObject" = self.__view.render()
+        view_object: ViewObject = self.__view.render()
 
         # implicitly clear view every time see:#54
         v = self.__raw_view
