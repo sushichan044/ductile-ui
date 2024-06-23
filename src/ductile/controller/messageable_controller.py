@@ -11,8 +11,15 @@ if TYPE_CHECKING:
 class MessageableController(ViewController):
     """MessageableController is a class that controls the view with `discord.abc.Messageable`."""
 
-    def __init__(self, view: "View", *, messageable: "discord.abc.Messageable", timeout: float | None = 180) -> None:
-        super().__init__(view, timeout=timeout)
+    def __init__(
+        self,
+        view: "View",
+        *,
+        messageable: "discord.abc.Messageable",
+        timeout: float | None = 180,
+        sync_interval: float | None = None,
+    ) -> None:
+        super().__init__(view, timeout=timeout, sync_interval=sync_interval)
         self.__messageable = messageable
 
     async def send(self) -> None:

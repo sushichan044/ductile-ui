@@ -13,15 +13,16 @@ if TYPE_CHECKING:
 class InteractionController(ViewController):
     """InteractionController is a class that controls the view with `discord.abc.Messageable`."""
 
-    def __init__(
+    def __init__(  # noqa: PLR0913
         self,
         view: "View",
         *,
         interaction: "Interaction",
         timeout: float | None = 180,
         ephemeral: bool = False,
+        sync_interval: float | None = None,
     ) -> None:
-        super().__init__(view, timeout=timeout)
+        super().__init__(view, timeout=timeout, sync_interval=sync_interval)
         self.__interaction = interaction
         self.__ephemeral = ephemeral
 

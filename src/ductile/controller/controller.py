@@ -1,11 +1,15 @@
+import asyncio
 from typing import TYPE_CHECKING, Any, Literal, NamedTuple, overload
 
 from ..internal import _InternalView  # noqa: TID252
 from ..state import State  # noqa: TID252
-from ..utils import wait_tasks_by_name  # noqa: TID252
+from ..utils import (  # noqa: TID252
+    debounce,
+    wait_tasks_by_name,
+)
 
 if TYPE_CHECKING:
-    from collections.abc import Generator
+    from collections.abc import Awaitable, Callable, Generator
 
     from discord import Message
 
@@ -30,11 +34,15 @@ class ViewResult(NamedTuple):
 class ViewController:
     """ViewController is a class that controls the view."""
 
-    def __init__(self, view: "View", *, timeout: float | None = 180) -> None:
+    def __init__(self, view: "View", *, timeout: float | None = 180, sync_interval: float | None = None) -> None:
         self.__view = view
         view._controller = self  # noqa: SLF001
         self.__raw_view = _InternalView(timeout=timeout, on_error=self.__view.on_error, on_timeout=self.__view.on_timeout)
         self.__message: Message | None = None
+
+        # sync_fn is a function that syncs the message with the current view
+        self.__sync_fn = self.__create_sync_function(sync_interval=sync_interval)
+        self.__loop = asyncio.get_event_loop()
 
     @property
     def message(self) -> "Message | None":
@@ -66,15 +74,44 @@ class ViewController:
 
     async def sync(self) -> None:
         """Sync the message with current view."""
+        try:
+            return await self.__sync_fn()
+        except RuntimeError:
+            pass
+
+    def __create_sync_function(self, *, sync_interval: float | None) -> "Callable[[], Awaitable[None]]":
+        """
+        Create a function that syncs the message with the current view.
+
+        Parameters
+        ----------
+        sync_interval : `float | None`, optional
+            The interval to sync the message with the current view. If None, the message will be synced immediately.
+
+        Returns
+        -------
+        Callable[[], Awaitable[None]]
+            The function that syncs the message with the current view.
+
+            **Note that this function returns a same coroutine while debouncing.**
+        """
+        if sync_interval is None:
+            return self.__sync_immediately
+
+        return debounce(wait=sync_interval)(self.__sync_immediately)
+
+    async def __sync_immediately(self) -> None:
+        """Sync the message with current view."""
         if self.message is None:
             return
 
         # maybe validation for self.__view is needed
         d = self._process_view_for_discord("attachment")
-        self.message = await self.message.edit(**d)
+        await self.message.edit(**d)
 
     def stop(self) -> None:
         """Stop the view and return the state of all states in the view."""
+        self.__loop.create_task(self.__sync_immediately())  # execute last sync before stop
         self.__raw_view.stop()
 
     async def wait(self) -> ViewResult:
