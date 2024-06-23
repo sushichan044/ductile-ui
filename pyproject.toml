@@ -1,6 +1,6 @@
 [project]
 name = "ductile-ui"
-version = "0.2.7"
+version = "0.3.0"
 description = "A library provides declarative ui for discord.py"
 authors = [{ name = "sushi-chaaaan", email = "mail@sushichan.live" }]
 dependencies = [
