@@ -39,4 +39,4 @@ jobs:
       - name: format
         if: ${{ always() && steps.install.outcome == 'success' }}
         run: |
-          ruff format --check github .
+          ruff format --check .
