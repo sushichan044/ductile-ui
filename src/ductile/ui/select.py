@@ -127,7 +127,7 @@ class Select(ui.Select):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
+    async def callback(self, interaction: "Interaction") -> None:
         if self.__callback_fn is None:
             await interaction.response.defer()
             return
@@ -169,7 +169,7 @@ class ChannelSelect(ui.ChannelSelect):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
+    async def callback(self, interaction: "Interaction") -> None:
         if self.__callback_fn is None:
             await interaction.response.defer()
             return
@@ -210,7 +210,7 @@ class RoleSelect(ui.RoleSelect):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
+    async def callback(self, interaction: "Interaction") -> None:
         if self.__callback_fn is None:
             await interaction.response.defer()
             return
@@ -252,7 +252,7 @@ class MentionableSelect(ui.MentionableSelect):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
+    async def callback(self, interaction: "Interaction") -> None:
         if self.__callback_fn is None:
             await interaction.response.defer()
             return
@@ -293,7 +293,7 @@ class UserSelect(ui.UserSelect):
         self.__callback_fn = on_select
         super().__init__(**__d)
 
-    async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
+    async def callback(self, interaction: "Interaction") -> None:
         if self.__callback_fn is None:
             await interaction.response.defer()
             return

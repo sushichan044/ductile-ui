@@ -1,40 +1,54 @@
-[tool.poetry]
+[project]
 name = "ductile-ui"
 version = "0.2.6"
-description = "A library provides interactive ui for discord.py"
-authors = ["sushi-chaaaan <mail@sushichan.live>"]
-license = "MIT"
+description = "A library provides declarative ui for discord.py"
+authors = [{ name = "sushi-chaaaan", email = "mail@sushichan.live" }]
+dependencies = [
+    "discord-py>=2.2.0",
+    "pydantic>=2.7.4",
+    "typing-extensions>=4.12.2",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Internet",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+keywords = ["discord", "discord.py", "ductile", "ductile-ui"]
+license = { file = "LICENSE" }
 readme = "README.md"
-homepage = "https://github.com/sushi-chaaaan"
-repository = "https://github.com/sushi-chaaaan/ductile-ui"
-packages = [{ include = "ductile", from = "src" }]
+requires-python = ">= 3.10"
 
-[tool.poetry.dependencies]
-python = "^3.10"
-discord-py = "^2.2.0"
-pydantic = "^2.4.2"
-typing-extensions = "^4.8.0"
+[project.urls]
+Repository = "https://github.com/sushi-chaaaan/ductile-ui"
+Issues = "https://github.com/sushi-chaaaan/ductile-ui/issues"
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.poetry.group.dev.dependencies]
-black = "^23.9.1"
-pre-commit = "^3.4.0"
-ruff = "^0.1.0"
-poethepoet = "^0.24.1"
-
-[tool.black]
-target-version = ["py310"]
-line-length = 125
+[tool.rye]
+managed = true
+dev-dependencies = ["ruff>=0.4.10"]
 
 
 [tool.ruff]
+# https://qiita.com/yuji38kwmt/items/63e82126076204923520
 target-version = "py310"
 line-length = 125
+
+[tool.ruff.lint]
 ignore = [
     "E203",
-    # "D",
-    "D100",
-    "D104",
+    "D",
     "RUF001",  # 全角記号など`ambiguous unicode character`も使いたいため
     "RUF002",  # 全角記号など`ambiguous unicode character`も使いたいため
     "RUF003",  # 全角記号など`ambiguous unicode character`も使いたいため
@@ -42,30 +56,41 @@ ignore = [
     "ANN101",  # missing-type-self: 引数selfには型ヒントは付けていないため
     "ANN102",  # missing-type-cls: 引数clsには型ヒントは付けていないため
     "ERA",     # : 役立つこともあるが、コメントアウトしていないコードも警告されるので無視する
+    "COM812",  # recommended by ruff formatter
+    "ISC001",  # recommended by ruff formatter
+    "UP040",   # discord.py can not understand new type syntax
 ]
 select = ["ALL"]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "numpy"
 
-
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
+"./src/app/**" = [
+    "INP001", # add __init__.py to app directory is too much work
+]
 "/**/tests/**" = [
     "INP001", # add __init__.py to tests directory is too much work
     "S101",   # allow to use assert in tests
 ]
-"/**/examples/**" = [
-    "D",
+"./examples/**" = [
     "INP001", # add __init__.py to examples directory is too much work
 ]
 
-[tool.poe.tasks]
-install = "poetry run pre-commit install"
-lint = "poetry run ruff check ./src"
-format = "poetry run black ./src"
-export = "poetry export -f requirements.txt -o requirements.txt --only main --without-hashes"
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
 
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ductile_ui"]

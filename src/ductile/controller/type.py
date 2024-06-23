@@ -29,9 +29,9 @@ class _ViewObjectDict(TypedDict, total=False):
     view: "ui.View"
 
 
-class ViewObjectDictWithAttachment(_ViewObjectDict, total=False):  # noqa: D101
+class ViewObjectDictWithAttachment(_ViewObjectDict, total=False):
     attachments: "list[File]"
 
 
-class ViewObjectDictWithFiles(_ViewObjectDict, total=False):  # noqa: D101
+class ViewObjectDictWithFiles(_ViewObjectDict, total=False):
     files: "list[File]"

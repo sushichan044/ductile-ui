@@ -51,7 +51,7 @@ class Button(ui.Button):
             custom_id=custom_id,
         )
 
-    async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
+    async def callback(self, interaction: "Interaction") -> None:
         if self.__callback_fn is None:
             await interaction.response.defer()
             return
@@ -77,5 +77,5 @@ class LinkButton(ui.Button):
             custom_id=custom_id,
         )
 
-    async def callback(self, interaction: "Interaction") -> None:  # noqa: D102
+    async def callback(self, interaction: "Interaction") -> None:
         pass

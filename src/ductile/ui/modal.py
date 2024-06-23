@@ -88,7 +88,7 @@ class Modal(ui.Modal):
         for _in in self.__inputs:
             self.add_item(_in)
 
-    async def on_submit(self, interaction: "Interaction") -> None:  # noqa: D102
+    async def on_submit(self, interaction: "Interaction") -> None:
         if self.__callback_fn is None:
             await interaction.response.defer()
             return
