@@ -93,4 +93,4 @@ line-ending = "auto"
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/ductile_ui"]
+packages = ["src/ductile"]
