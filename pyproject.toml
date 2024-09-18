@@ -2,7 +2,7 @@
 name = "ductile-ui"
 version = "0.3.0"
 description = "A library provides declarative ui for discord.py"
-authors = [{ name = "sushi-chaaaan", email = "mail@sushichan.live" }]
+authors = [{ name = "sushichan044", email = "mail@sushichan.live" }]
 dependencies = [
     "discord-py>=2.2.0",
     "pydantic>=2.7.4",
