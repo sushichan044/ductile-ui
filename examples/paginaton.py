@@ -3,6 +3,7 @@
 
 import discord
 from discord.ext import commands
+
 from ductile import View, ViewObject
 from ductile.controller import MessageableController
 from ductile.pagination import Paginator

@@ -93,7 +93,7 @@ class Select(ui.Select):
     This class has compatibility with the `discord.ui.Select` class.
     """
 
-    def __init__(  # noqa: PLR0913
+    def __init__(
         self,
         *,
         config: SelectConfig,

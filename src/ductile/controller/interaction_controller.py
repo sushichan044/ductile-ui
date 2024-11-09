@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 class InteractionController(ViewController):
     """InteractionController is a class that controls the view with `discord.abc.Messageable`."""
 
-    def __init__(  # noqa: PLR0913
+    def __init__(
         self,
         view: "View",
         *,

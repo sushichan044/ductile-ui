@@ -67,7 +67,7 @@ class Modal(ui.Modal):
     This class has compatibility with the `discord.ui.Modal` class.
     """
 
-    def __init__(  # noqa: PLR0913
+    def __init__(
         self,
         *,
         title: str,

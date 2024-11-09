@@ -5,6 +5,8 @@ from typing import Literal
 
 import discord
 from discord.ext import commands
+from typing_extensions import TypeIs
+
 from ductile import State, View, ViewObject
 from ductile.controller import MessageableController
 from ductile.ui import Button, Select
@@ -17,6 +19,10 @@ class Bot(commands.Bot):
     async def on_ready(self) -> None:
         print(f"Logged in as {self.user}")  # noqa: T201
         print("Ready!")  # noqa: T201
+
+
+def is_page_value(value: str) -> TypeIs[Literal["1", "2", "3", "4"]]:
+    return value in {"1", "2", "3", "4"}
 
 
 class SelectView(View):
@@ -35,8 +41,8 @@ class SelectView(View):
         async def handle_select(interaction: discord.Interaction, values: list[str]) -> None:
             await interaction.response.defer()
 
-            new_value = values[0] if values[0] in pages else "1"  # new_value is "1" or "2" or "3" or "4"
-            self.current_page.set_state(new_value)  # pyright: ignore[reportGeneralTypeIssues]
+            new_value = p if is_page_value(p := values[0]) else self.current_page()
+            self.current_page.set_state(new_value)
 
         async def stop(interaction: discord.Interaction) -> None:
             await interaction.response.defer()

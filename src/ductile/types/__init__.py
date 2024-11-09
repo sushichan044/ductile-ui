@@ -1,22 +1,16 @@
 from .callback import (
     ChannelSelectCallback,
     ChannelSelectSyncCallback,
-    #
     InteractionCallback,
     InteractionSyncCallback,
-    #
     MentionableSelectCallback,
     MentionableSelectSyncCallback,
-    #
     ModalCallback,
     ModalSyncCallback,
-    #
     RoleSelectCallback,
     RoleSelectSyncCallback,
-    #
     SelectCallback,
     SelectSyncCallback,
-    #
     UserSelectCallback,
     UserSelectSyncCallback,
 )
