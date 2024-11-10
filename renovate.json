@@ -1,6 +1,47 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "$schema": "https://json.schemastore.org/renovate.json",
   "extends": [
-    "config:recommended"
+    "config:best-practices"
+  ],
+  "schedule": [
+    "before 4:00am on Sunday"
+  ],
+  "labels": [
+    "renovate"
+  ],
+  "timezone": "Asia/Tokyo",
+  "prHourlyLimit": 0,
+  "automerge": false,
+  "rangeStrategy": "bump",
+  "branchConcurrentLimit": 0,
+  "enabledManagers": [
+    "pep621",
+    "github-actions"
+  ],
+  "packageRules": [
+    {
+      "groupName": "github-actions",
+      "matchManagers": [
+        "github-actions"
+      ]
+    },
+    {
+      "groupName": "dependencies",
+      "matchDepTypes": [
+        "project.dependencies"
+      ]
+    },
+    {
+      "groupName": "devDependencies",
+      "matchDepTypes": [
+        "tool.uv.dev-dependencies"
+      ]
+    },
+    {
+      "groupName": "discord",
+      "matchPackageNames": [
+        "discord-py"
+      ]
+    }
   ]
 }
