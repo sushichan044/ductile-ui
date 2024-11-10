@@ -160,7 +160,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "discord-py", specifier = ">=2.2.0" },
-    { name = "pydantic", specifier = ">=2.7.4" },
+    { name = "pydantic", specifier = ">=2.9.2" },
     { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
 
