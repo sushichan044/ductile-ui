@@ -7,13 +7,16 @@ from ..utils import (  # noqa: TID252
     debounce,
     wait_tasks_by_name,
 )
+from ..view import (  # noqa: TID252
+    ViewObject,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable, Generator
 
     from discord import Message
 
-    from ..view import View, ViewObject  # noqa: TID252
+    from ..view import View  # noqa: TID252
     from .type import ViewObjectDictWithAttachment, ViewObjectDictWithFiles
 
 
@@ -43,6 +46,9 @@ class ViewController:
         # sync_fn is a function that syncs the message with the current view
         self.__sync_fn = self.__create_sync_function(sync_interval=sync_interval)
         self.__loop = asyncio.get_event_loop()
+
+        # store latest view object to compare with upcoming view object
+        self.__view_object = ViewObject()
 
     @property
     def message(self) -> "Message | None":
@@ -104,6 +110,12 @@ class ViewController:
         """Sync the message with current view."""
         if self.message is None:
             return
+
+        # Do not re-render if the view is not changed
+        if self.__view_object.equals(upcoming := self.__view.render()):
+            return
+
+        self.__view_object = upcoming
 
         # maybe validation for self.__view is needed
         d = self._process_view_for_discord("attachment")
@@ -173,7 +185,7 @@ class ViewController:
             This can be passed to `discord.abc.Messageable.send` or `discord.abc.Messageable.edit` and etc
             as unpacked keyword arguments.
         """
-        view_object: ViewObject = self.__view.render()
+        view_object = self.__view_object
 
         # implicitly clear view every time see:#54
         v = self.__raw_view

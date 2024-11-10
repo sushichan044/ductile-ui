@@ -41,6 +41,47 @@ class ViewObject(BaseModel):
 
     model_config = {"arbitrary_types_allowed": True}
 
+    def equals(self, other: "ViewObject") -> bool:
+        if self.content != other.content:
+            return False
+
+        if self._equals_embeds(other.embeds) is False:
+            return False
+
+        if self._equals_components(other.components) is False:
+            return False
+
+        # Comparing content of File is not easy, so just compare Nullity
+        return self.files is None and other.files is None
+
+    def _equals_embeds(self, other: "list[Embed] | None") -> bool:
+        if self.embeds is None and other is None:
+            return True
+
+        # One of them is None, so they are not equal
+        if self.embeds is None or other is None:
+            return False
+
+        if len(self.embeds) != len(other):
+            return False
+
+        return all(self.embeds[i] == other[i] for i in range(len(self.embeds)))
+
+    def _equals_components(self, other: "list[ui.Item] | None") -> bool:
+        if self.components is None and other is None:
+            return True
+
+        # One of them is None, so they are not equal
+        if self.components is None or other is None:
+            return False
+
+        if len(self.components) != len(other):
+            return False
+
+        return all(
+            self.components[i].to_component_dict() == other[i].to_component_dict() for i in range(len(self.components))
+        )
+
 
 class View:
     """
