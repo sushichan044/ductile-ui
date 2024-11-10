@@ -37,7 +37,7 @@ build-backend = "hatchling.build"
 
 [tool.uv]
 managed = true
-dev-dependencies = ["ruff>=0.4.10"]
+dev-dependencies = ["ruff>=0.7.3"]
 
 
 [tool.ruff]
