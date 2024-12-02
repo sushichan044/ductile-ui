@@ -17,20 +17,20 @@ from .callback import (
 from .view import ViewErrorHandler, ViewTimeoutHandler
 
 __all__ = [
-    "InteractionCallback",
-    "InteractionSyncCallback",
-    "SelectCallback",
-    "SelectSyncCallback",
     "ChannelSelectCallback",
     "ChannelSelectSyncCallback",
-    "RoleSelectCallback",
-    "RoleSelectSyncCallback",
+    "InteractionCallback",
+    "InteractionSyncCallback",
     "MentionableSelectCallback",
     "MentionableSelectSyncCallback",
-    "UserSelectCallback",
-    "UserSelectSyncCallback",
     "ModalCallback",
     "ModalSyncCallback",
+    "RoleSelectCallback",
+    "RoleSelectSyncCallback",
+    "SelectCallback",
+    "SelectSyncCallback",
+    "UserSelectCallback",
+    "UserSelectSyncCallback",
     "ViewErrorHandler",
     "ViewTimeoutHandler",
 ]
