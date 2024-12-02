@@ -37,7 +37,11 @@ build-backend = "hatchling.build"
 
 [tool.uv]
 managed = true
-dev-dependencies = ["ruff>=0.7.3"]
+dev-dependencies = [
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.7.3",
+]
 
 
 [tool.pytest.ini_options]
