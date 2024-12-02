@@ -5,13 +5,13 @@ import discord
 from discord.app_commands import AppCommandChannel, AppCommandThread
 
 __all__ = [
-    "InteractionCallback",
-    "SelectCallback",
     "ChannelSelectCallback",
-    "RoleSelectCallback",
+    "InteractionCallback",
     "MentionableSelectCallback",
-    "UserSelectCallback",
     "ModalCallback",
+    "RoleSelectCallback",
+    "SelectCallback",
+    "UserSelectCallback",
 ]
 
 # InteractionCallback

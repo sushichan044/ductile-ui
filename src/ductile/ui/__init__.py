@@ -4,13 +4,13 @@ from .select import ChannelSelect, MentionableSelect, RoleSelect, Select, Select
 
 __all__ = [
     "Button",
-    "LinkButton",
-    "Modal",
-    "TextInput",
     "ChannelSelect",
+    "LinkButton",
     "MentionableSelect",
+    "Modal",
     "RoleSelect",
     "Select",
     "SelectOption",
+    "TextInput",
     "UserSelect",
 ]
