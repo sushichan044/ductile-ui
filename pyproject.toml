@@ -40,6 +40,9 @@ managed = true
 dev-dependencies = ["ruff>=0.7.3"]
 
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
 [tool.ruff]
 # https://qiita.com/yuji38kwmt/items/63e82126076204923520
 target-version = "py310"
@@ -85,7 +88,6 @@ indent-style = "space"
 skip-magic-trailing-comma = false
 # Like Black, automatically detect the appropriate line ending.
 line-ending = "auto"
-
 
 [tool.hatch.metadata]
 allow-direct-references = true
