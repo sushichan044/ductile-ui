@@ -38,6 +38,7 @@ build-backend = "hatchling.build"
 [tool.uv]
 managed = true
 dev-dependencies = [
+    "pytest-mock>=3.14.0",
     "pytest>=8.3.4",
     "pytest-cov>=6.0.0",
     "ruff>=0.8.2",
