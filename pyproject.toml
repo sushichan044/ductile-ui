@@ -5,7 +5,7 @@ description = "A library provides declarative ui for discord.py"
 authors = [{ name = "sushichan044", email = "mail@sushichan.live" }]
 dependencies = [
     "discord-py>=2.2.0",
-    "pydantic>=2.10.3",
+    "pydantic>=2.10.6",
     "typing-extensions>=4.12.2",
 ]
 classifiers = [
