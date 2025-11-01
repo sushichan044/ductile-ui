@@ -1,5 +1,14 @@
+[tasks.init]
+run = "uv sync --dev"
+
 [tasks.lint]
 run = "uv run ruff check"
 
+[tasks."lint:fix"]
+run = "uv run ruff check --fix"
+
 [tasks.format]
 run = "uv run ruff format"
+
+[tasks.test]
+run = "uv run pytest"
