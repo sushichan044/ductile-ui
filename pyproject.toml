@@ -20,7 +20,7 @@ classifiers = [
 keywords = ["discord", "discord.py", "ductile", "ductile-ui"]
 license = { file = "LICENSE" }
 readme = "README.md"
-requires-python = ">= 3.10"
+requires-python = ">=3.14.7"
 dependencies = [
     "discord-py>=2.2.0",
     "pydantic>=2.12.3",
