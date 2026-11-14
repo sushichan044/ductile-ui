@@ -24,7 +24,7 @@ requires-python = ">= 3.10"
 dependencies = [
     "discord-py>=2.2.0",
     "pydantic>=2.12.3",
-    "typing-extensions>=4.15.0",
+    "typing-extensions>=4.16.0",
 ]
 
 [dependency-groups]
