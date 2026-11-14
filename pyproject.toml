@@ -31,7 +31,7 @@ dependencies = [
 dev = [
     "pytest-mock>=3.15.1",
     "pytest>=8.4.2",
-    "pytest-cov>=7.0.0",
+    "pytest-cov>=7.1.0",
     "ruff>=0.14.3",
 ]
 
